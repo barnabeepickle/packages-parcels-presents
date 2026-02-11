@@ -1,5 +1,7 @@
 package com.github.barnabeepickle.basketbottlebox;
 
+import com.github.barnabeepickle.basketbottlebox.client.ModClientHandler;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +17,7 @@ public class bbbMod {
 
     @Mod.EventHandler
     public void preLoadEvent(FMLPreInitializationEvent event) {
-        LOGGER.info("Hello From {}!", Tags.MOD_NAME);
+
+        MinecraftForge.EVENT_BUS.register(ModClientHandler.class);
     }
 }
