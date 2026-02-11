@@ -6,18 +6,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Mod(modid = Tags.MODID, name = Tags.MOD_NAME, version = Tags.VERSION)
-public class ExampleMod {
+@Mod.EventBusSubscriber
+public class bbbMod {
 
     public static final Logger LOGGER = LogManager.getLogger(Tags.MOD_NAME);
 
-    /**
-     * <a href="https://cleanroommc.com/wiki/forge-mod-development/event#overview">
-     *     Take a look at how many FMLStateEvents you can listen to via the @Mod.EventHandler annotation here
-     * </a>
-     */
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
+    public void preLoad(FMLPreInitializationEvent event) {
         LOGGER.info("Hello From {}!", Tags.MOD_NAME);
     }
-
 }
