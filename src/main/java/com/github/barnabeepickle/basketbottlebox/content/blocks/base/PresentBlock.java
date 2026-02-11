@@ -1,7 +1,9 @@
 package com.github.barnabeepickle.basketbottlebox.content.blocks.base;
 
 import com.github.barnabeepickle.basketbottlebox.Tags;
+import com.github.barnabeepickle.basketbottlebox.bbbMod;
 import com.github.barnabeepickle.basketbottlebox.content.blocks.entity.PresentTileEntity;
+import com.github.barnabeepickle.basketbottlebox.networking.ModGUIHandler;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -21,6 +23,10 @@ public abstract class PresentBlock extends ModBlock {
     public PresentBlock(MapColor mapColor) {
         super(Material.WOOD, mapColor);
         this.setHardness(1.0F);
+    }
+
+    public void openPresentGUI(World world, EntityPlayer player) {
+        player.openGui(bbbMod.INSTANCE, ModGUIHandler.PRESENT_GUI, world, ((int) player.posX), ((int) player.posY), ((int) player.posZ));
     }
 
     @Override
@@ -45,15 +51,18 @@ public abstract class PresentBlock extends ModBlock {
                     player.sendStatusMessage(new TextComponentTranslation("feedback." + Tags.MODID + ".present.no_owner"), false);
                 } else if (presentTileEntity.isPlayerOwner(player)) {
                     // open owner GUI here
+                    this.openPresentGUI(world, player);
                     return true;
                 }
 
                 if (!presentTileEntity.hasTargetPlayer()) {
                     player.sendStatusMessage(new TextComponentTranslation("feedback." + Tags.MODID + ".present.no_target"), false);
                     // open target GUI here
+                    this.openPresentGUI(world, player);
                     return true;
                 } else if (presentTileEntity.isPlayerTarget(player)) {
                     // open target GUI here
+                    this.openPresentGUI(world, player);
                     return true;
                 }
             }
