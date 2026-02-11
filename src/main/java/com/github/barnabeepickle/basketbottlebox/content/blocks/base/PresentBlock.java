@@ -75,6 +75,7 @@ public abstract class PresentBlock extends ModBlock {
             if (tileEntity instanceof PresentTileEntity presentTileEntity && entity instanceof EntityPlayer player) {
                 if (!presentTileEntity.hasOwnerPlayer()) {
                     presentTileEntity.setOwnerPlayer(player);
+                    presentTileEntity.markDirty();
                 }
             }
         }
