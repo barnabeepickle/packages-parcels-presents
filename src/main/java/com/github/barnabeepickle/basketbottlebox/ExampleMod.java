@@ -1,4 +1,4 @@
-package com.example.modid;
+package com.github.barnabeepickle.basketbottlebox;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
