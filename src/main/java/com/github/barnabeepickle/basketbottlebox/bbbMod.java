@@ -8,11 +8,13 @@ import org.apache.logging.log4j.Logger;
 @Mod(modid = Tags.MODID, name = Tags.MOD_NAME, version = Tags.VERSION)
 @Mod.EventBusSubscriber
 public class bbbMod {
+    @Mod.Instance(Tags.MODID)
+    public static bbbMod INSTANCE;
 
     public static final Logger LOGGER = LogManager.getLogger(Tags.MOD_NAME);
 
     @Mod.EventHandler
-    public void preLoad(FMLPreInitializationEvent event) {
+    public void preLoadEvent(FMLPreInitializationEvent event) {
         LOGGER.info("Hello From {}!", Tags.MOD_NAME);
     }
 }
