@@ -1,1 +1,6 @@
 itemGroup.basketbottlebox.primary=Baskets, Bottles & Boxes
+
+feedback.basketbottlebox.present.no_owner=This present has no gift giver, it might not be working.
+feedback.basketbottlebox.present.no_target=This present has no gift receiver so can be claimed by anyone.
+
+tile.red_present_block.name=Red Present
