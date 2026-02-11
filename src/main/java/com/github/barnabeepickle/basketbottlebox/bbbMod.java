@@ -1,6 +1,9 @@
 package com.github.barnabeepickle.basketbottlebox;
 
 import com.github.barnabeepickle.basketbottlebox.client.ModClientHandler;
+import com.github.barnabeepickle.basketbottlebox.events.ModBlocks;
+import com.github.barnabeepickle.basketbottlebox.events.ModItems;
+import com.github.barnabeepickle.basketbottlebox.events.ModTileEntities;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -17,6 +20,9 @@ public class bbbMod {
 
     @Mod.EventHandler
     public void preLoadEvent(FMLPreInitializationEvent event) {
+        MinecraftForge.EVENT_BUS.register(ModBlocks.class);
+        MinecraftForge.EVENT_BUS.register(ModTileEntities.class);
+        MinecraftForge.EVENT_BUS.register(ModItems.class);
 
         MinecraftForge.EVENT_BUS.register(ModClientHandler.class);
     }
