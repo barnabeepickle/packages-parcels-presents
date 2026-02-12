@@ -15,12 +15,11 @@ public class PresentGUI extends GuiContainer {
     private static final ResourceLocation texture = new ResourceLocation(Tags.MODID, "textures/gui/present.png");
     private final PresentInventory inventory;
 
-    public PresentGUI(InventoryPlayer invPlayer, PresentInventory inventory)
-    {
+    public PresentGUI(InventoryPlayer invPlayer, PresentInventory inventory) {
         super(new PresentContainer(invPlayer, inventory));
         this.inventory = inventory;
         this.xSize = 176;
-        this.ySize = 166;
+        this.ySize = 175;
     }
 
     @Override
@@ -32,6 +31,6 @@ public class PresentGUI extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int var1, int var2) {
-        this.fontRenderer.drawString(I18n.format("container.present"), 6, 8, ColorUtil.getColor(64, 64, 64));
+        this.fontRenderer.drawString(I18n.format("container.present"), 6, 6, ColorUtil.getColor(70, 70, 70));
     }
 }
