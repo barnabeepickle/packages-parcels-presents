@@ -8,15 +8,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import jakarta.annotation.Nullable;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class PresentTileEntity extends TileEntity {
     private NonNullList<ItemStack> contents = NonNullList.<ItemStack>withSize(18, ItemStack.EMPTY);
     private boolean creativePlayerDestroyed;
     @Nullable
-    private UUID targetPlayer = null;
+    private String targetPlayer = null;
     @Nullable
-    private UUID ownerPlayer = null;
+    private String ownerPlayer = null;
 
     public PresentTileEntity() {
 
@@ -33,7 +34,7 @@ public class PresentTileEntity extends TileEntity {
     public boolean isPlayerTarget(EntityPlayer player) {
         if (this.hasTargetPlayer()) {
             assert targetPlayer != null;
-            return EntityPlayer.getUUID(player.getGameProfile()).compareTo(targetPlayer) == 0;
+            return Objects.equals(player.getName(), targetPlayer);
         }
         return false;
     }
@@ -41,25 +42,25 @@ public class PresentTileEntity extends TileEntity {
     public boolean isPlayerOwner(EntityPlayer player) {
         if (this.hasOwnerPlayer()) {
             assert ownerPlayer != null;
-            return EntityPlayer.getUUID(player.getGameProfile()).compareTo(ownerPlayer) == 0;
+            return Objects.equals(player.getName(), ownerPlayer);
         }
         return false;
     }
 
-    public @Nullable UUID getTargetPlayer() {
+    public @Nullable String getTargetPlayer() {
         return this.targetPlayer;
     }
 
-    public @Nullable UUID getOwnerPlayer() {
+    public @Nullable String getOwnerPlayer() {
         return this.ownerPlayer;
     }
 
     public void setTargetPlayer(EntityPlayer player) {
-        this.targetPlayer = player.getPersistentID();
+        this.targetPlayer = player.getName();
     }
 
     public void setOwnerPlayer(EntityPlayer player) {
-        this.ownerPlayer = player.getPersistentID();
+        this.ownerPlayer = player.getName();
     }
 
     public int getSizeInventory() {
@@ -104,16 +105,16 @@ public class PresentTileEntity extends TileEntity {
 
     public NBTTagCompound saveToNbt(NBTTagCompound nbt) {
         ItemStackHelper.saveAllItems(nbt, this.contents, false);
-        nbt.setUniqueId("target_player", this.targetPlayer);
-        nbt.setUniqueId("owner_player", this.ownerPlayer);
+        nbt.setString("target_player", this.targetPlayer);
+        nbt.setString("owner_player", this.ownerPlayer);
 
         return nbt;
     }
 
     public void loadFromNbt(NBTTagCompound nbt) {
         ItemStackHelper.loadAllItems(nbt, this.contents);
-        this.targetPlayer = nbt.getUniqueId("target_player");
-        this.ownerPlayer = nbt.getUniqueId("owner_player");
+        this.targetPlayer = nbt.getString("target_player");
+        this.ownerPlayer = nbt.getString("owner_player");
     }
 
     protected NonNullList<ItemStack> getItems()
