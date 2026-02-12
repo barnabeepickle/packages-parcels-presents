@@ -1,8 +1,9 @@
 package com.github.barnabeepickle.ppnp.content.blocks;
 
 import com.github.barnabeepickle.ppnp.content.blocks.base.PresentBlock;
-import jakarta.annotation.Nonnull;
 import net.minecraft.block.material.MapColor;
+
+import javax.annotation.Nonnull;
 
 public class RedPresent extends PresentBlock {
     public RedPresent() {
