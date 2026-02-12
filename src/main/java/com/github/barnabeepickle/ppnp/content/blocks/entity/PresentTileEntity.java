@@ -1,16 +1,21 @@
 package com.github.barnabeepickle.ppnp.content.blocks.entity;
 
+import com.cleanroommc.modularui.ModularUI;
 import com.cleanroommc.modularui.api.IGuiHolder;
 import com.cleanroommc.modularui.factory.PosGuiData;
 import com.cleanroommc.modularui.screen.ModularPanel;
+import com.cleanroommc.modularui.screen.ModularScreen;
 import com.cleanroommc.modularui.screen.UISettings;
 import com.cleanroommc.modularui.value.sync.PanelSyncManager;
+import com.github.barnabeepickle.ppnp.Tags;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -124,8 +129,14 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     // ModularUI stuff below
 
     @Override
+    @SideOnly(Side.CLIENT)
+    public ModularScreen createScreen(PosGuiData guiData, ModularPanel mainPanel) {
+        return new ModularScreen(Tags.MODID, mainPanel);
+    }
+
+    @Override
     public ModularPanel buildUI(PosGuiData guiData, PanelSyncManager syncManager, UISettings settings) {
-        ModularPanel panel = ModularPanel.defaultPanel("tutorial_gui");
+        ModularPanel panel = ModularPanel.defaultPanel("present_gui");
         panel.bindPlayerInventory();
         return panel;
     }
