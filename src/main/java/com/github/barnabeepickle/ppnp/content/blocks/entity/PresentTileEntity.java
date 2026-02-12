@@ -1,5 +1,10 @@
 package com.github.barnabeepickle.ppnp.content.blocks.entity;
 
+import com.cleanroommc.modularui.api.IGuiHolder;
+import com.cleanroommc.modularui.factory.PosGuiData;
+import com.cleanroommc.modularui.screen.ModularPanel;
+import com.cleanroommc.modularui.screen.UISettings;
+import com.cleanroommc.modularui.value.sync.PanelSyncManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
@@ -9,7 +14,7 @@ import net.minecraft.util.NonNullList;
 
 import java.util.Objects;
 
-public class PresentTileEntity extends TileEntity {
+public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiData> {
     private NonNullList<ItemStack> contents = NonNullList.<ItemStack>withSize(18, ItemStack.EMPTY);
     private boolean creativePlayerDestroyed;
     private String targetPlayer = "";
@@ -111,8 +116,16 @@ public class PresentTileEntity extends TileEntity {
         this.ownerPlayer = nbt.getString("owner_player");
     }
 
-    protected NonNullList<ItemStack> getItems()
-    {
+    protected NonNullList<ItemStack> getItems() {
         return this.contents;
+    }
+
+    // ModularUI stuff below
+
+    @Override
+    public ModularPanel buildUI(PosGuiData guiData, PanelSyncManager syncManager, UISettings settings) {
+        ModularPanel panel = ModularPanel.defaultPanel("tutorial_gui");
+        panel.bindPlayerInventory();
+        return panel;
     }
 }
