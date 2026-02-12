@@ -11,7 +11,7 @@ public class RedPresent extends PresentBlock {
     }
 
     @Nonnull
-    private static final String name = "red_present_block";
+    private static final String name = "red_present";
 
     public String getName() {
         return name;

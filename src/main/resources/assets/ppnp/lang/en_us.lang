@@ -6,4 +6,4 @@ container.present=Present
 feedback.ppnp.present.no_owner=This present has no gift giver, it might not be working.
 feedback.ppnp.present.no_target=This present has no gift receiver so can be claimed by anyone.
 
-tile.red_present_block.name=Red Present
+tile.red_present.name=Red Present
