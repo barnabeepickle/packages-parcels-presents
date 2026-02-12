@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiData> {
@@ -88,14 +89,14 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public @Nonnull NBTTagCompound writeToNBT(@Nonnull NBTTagCompound nbt) {
         super.writeToNBT(nbt);
 
         return this.saveToNbt(nbt);
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(@Nonnull NBTTagCompound nbt) {
         super.readFromNBT(nbt);
 
         this.loadFromNbt(nbt);
