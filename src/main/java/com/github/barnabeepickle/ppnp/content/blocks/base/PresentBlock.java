@@ -7,6 +7,7 @@ import com.github.barnabeepickle.ppnp.networking.ModGUIHandler;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -19,10 +20,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
+import static com.github.barnabeepickle.ppnp.content.ModCreativeTabs.primaryCreativeTab;
+
 public abstract class PresentBlock extends ModBlock {
     public PresentBlock(MapColor mapColor) {
+        this(mapColor, primaryCreativeTab);
+    }
+
+    public PresentBlock(MapColor mapColor, CreativeTabs creativeTab) {
         super(Material.WOOD, mapColor);
         this.setHardness(1.0F);
+        this.setCreativeTab(creativeTab);
     }
 
     public void openPresentGUI(World world, EntityPlayer player) {
