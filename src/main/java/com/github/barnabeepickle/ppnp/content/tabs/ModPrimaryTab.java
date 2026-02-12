@@ -4,6 +4,8 @@ import com.github.barnabeepickle.ppnp.Tags;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
+import static com.github.barnabeepickle.ppnp.events.ModItems.ITEM_RED_PRESENT;
+
 public class ModPrimaryTab extends CreativeTabs {
     public ModPrimaryTab() {
         super(Tags.MODID + ".primary");
@@ -11,6 +13,6 @@ public class ModPrimaryTab extends CreativeTabs {
 
     @Override
     public ItemStack createIcon() {
-        return null; // TODO
+        return ITEM_RED_PRESENT.getDefaultInstance();
     }
 }
