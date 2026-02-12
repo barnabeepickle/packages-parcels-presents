@@ -7,7 +7,11 @@ import com.cleanroommc.modularui.screen.ModularPanel;
 import com.cleanroommc.modularui.screen.ModularScreen;
 import com.cleanroommc.modularui.screen.UISettings;
 import com.cleanroommc.modularui.value.sync.PanelSyncManager;
+import com.cleanroommc.modularui.widgets.RichTextWidget;
+import com.cleanroommc.modularui.widgets.slot.ItemSlot;
+import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.github.barnabeepickle.ppnp.Tags;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
@@ -137,7 +141,16 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     @Override
     public ModularPanel buildUI(PosGuiData guiData, PanelSyncManager syncManager, UISettings settings) {
         ModularPanel panel = ModularPanel.defaultPanel("present_gui");
-        panel.bindPlayerInventory();
+        panel.bindPlayerInventory()
+                .child(new RichTextWidget()
+                        .addLine(I18n.format("container.present"))
+                        .size(162, 8)
+                        .left(7)
+                        .top(5)
+                ).child(new ItemSlot()
+                        .left(7)
+                        .top(16)
+                );
         return panel;
     }
 }
