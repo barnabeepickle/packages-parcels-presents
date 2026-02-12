@@ -6,7 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
-import jakarta.annotation.Nullable;
 
 import java.util.Objects;
 
@@ -42,11 +41,11 @@ public class PresentTileEntity extends TileEntity {
         return false;
     }
 
-    public @Nullable String getTargetPlayer() {
+    public String getTargetPlayer() {
         return this.targetPlayer;
     }
 
-    public @Nullable String getOwnerPlayer() {
+    public String getOwnerPlayer() {
         return this.ownerPlayer;
     }
 
