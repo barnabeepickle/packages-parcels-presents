@@ -1,7 +1,6 @@
 package com.github.barnabeepickle.ppnp.content.blocks.base;
 
 import com.github.barnabeepickle.ppnp.Tags;
-import com.github.barnabeepickle.ppnp.bbbMod;
 import com.github.barnabeepickle.ppnp.content.blocks.entity.PresentTileEntity;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -18,6 +17,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+
+import javax.annotation.Nonnull;
 
 import static com.github.barnabeepickle.ppnp.content.ModCreativeTabs.primaryCreativeTab;
 
@@ -39,11 +40,11 @@ public abstract class PresentBlock extends ModBlock {
     @Override
     public boolean onBlockActivated(
             World world,
-            BlockPos blockPos,
-            IBlockState blockstate,
-            EntityPlayer player,
-            EnumHand hand,
-            EnumFacing facing,
+            @Nonnull BlockPos blockPos,
+            @Nonnull IBlockState blockstate,
+            @Nonnull EntityPlayer player,
+            @Nonnull EnumHand hand,
+            @Nonnull EnumFacing facing,
             float hintX,
             float hintY,
             float hintZ
@@ -77,10 +78,10 @@ public abstract class PresentBlock extends ModBlock {
     @Override
     public void onBlockPlacedBy(
             World world,
-            BlockPos blockPos,
-            IBlockState blockstate,
-            EntityLivingBase entity,
-            ItemStack itemStack
+            @Nonnull BlockPos blockPos,
+            @Nonnull IBlockState blockstate,
+            @Nonnull EntityLivingBase entity,
+            @Nonnull ItemStack itemStack
     ) {
         if (!world.isRemote) {
             TileEntity tileEntity = world.getTileEntity(blockPos);
@@ -95,8 +96,9 @@ public abstract class PresentBlock extends ModBlock {
     }
 
     @SuppressWarnings("deprecation")
+    @Nonnull
     @Override
-    public ItemStack getItem(World world, BlockPos blockPos, IBlockState blockstate) {
+    public ItemStack getItem(@Nonnull World world, @Nonnull BlockPos blockPos, @Nonnull IBlockState blockstate) {
         ItemStack itemStack = super.getItem(world, blockPos, blockstate);
         PresentTileEntity presentTileEntity = (PresentTileEntity)world.getTileEntity(blockPos);
         assert presentTileEntity != null;
@@ -110,7 +112,7 @@ public abstract class PresentBlock extends ModBlock {
     }
 
     @Override
-    public void breakBlock(World world, BlockPos blockPos, IBlockState blockstate) {
+    public void breakBlock(World world, @Nonnull BlockPos blockPos, @Nonnull IBlockState blockstate) {
         TileEntity tileentity = world.getTileEntity(blockPos);
 
         if (tileentity instanceof PresentTileEntity presentTileEntity) {
@@ -131,22 +133,22 @@ public abstract class PresentBlock extends ModBlock {
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    public boolean hasTileEntity(@Nonnull IBlockState state) {
         return true;
     }
 
     @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
+    public TileEntity createTileEntity(@Nonnull World world, @Nonnull IBlockState state) {
         return new PresentTileEntity();
     }
 
     @SuppressWarnings("deprecation")
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(@Nonnull IBlockState state) {
         return false;
     }
 
     @SuppressWarnings("deprecation")
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(@Nonnull IBlockState state) {
         return false;
     }
 }
