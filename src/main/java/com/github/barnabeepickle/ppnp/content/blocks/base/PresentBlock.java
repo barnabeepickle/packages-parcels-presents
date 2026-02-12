@@ -1,7 +1,9 @@
 package com.github.barnabeepickle.ppnp.content.blocks.base;
 
+import com.cleanroommc.modularui.factory.GuiFactories;
 import com.github.barnabeepickle.ppnp.Tags;
 import com.github.barnabeepickle.ppnp.content.blocks.entity.PresentTileEntity;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -19,10 +21,11 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static com.github.barnabeepickle.ppnp.content.ModCreativeTabs.primaryCreativeTab;
 
-public abstract class PresentBlock extends ModBlock {
+public abstract class PresentBlock extends ModBlock implements ITileEntityProvider {
     public PresentBlock(MapColor mapColor) {
         this(mapColor, primaryCreativeTab);
     }
@@ -33,8 +36,18 @@ public abstract class PresentBlock extends ModBlock {
         this.setCreativeTab(creativeTab);
     }
 
-    public void openPresentGUI(World world, EntityPlayer player) {
+    public static final int USER_TARGET = 0;
+    public static final int USER_OWNER = 1;
 
+    public void openPresentGUI(EntityPlayer player, BlockPos blockPos, int userCase) {
+        switch (userCase) {
+            case USER_TARGET:
+                GuiFactories.tileEntity().open(player, blockPos);
+            case USER_OWNER:
+                GuiFactories.tileEntity().open(player, blockPos);
+            default:
+                GuiFactories.tileEntity().open(player, blockPos);
+        }
     }
 
     @Override
@@ -59,15 +72,18 @@ public abstract class PresentBlock extends ModBlock {
                     player.sendStatusMessage(new TextComponentTranslation("feedback." + Tags.MODID + ".present.no_owner"), false);
                 } else if (presentTileEntity.isPlayerOwner(player)) {
                     // open owner GUI here
+                    openPresentGUI(player, blockPos, USER_OWNER);
                     return true;
                 }
 
                 if (!presentTileEntity.hasTargetPlayer()) {
                     player.sendStatusMessage(new TextComponentTranslation("feedback." + Tags.MODID + ".present.no_target"), false);
                     // open target GUI here
+                    openPresentGUI(player, blockPos, USER_TARGET);
                     return true;
                 } else if (presentTileEntity.isPlayerTarget(player)) {
                     // open target GUI here
+                    openPresentGUI(player, blockPos, USER_TARGET);
                     return true;
                 }
             }
@@ -139,6 +155,12 @@ public abstract class PresentBlock extends ModBlock {
 
     @Override
     public TileEntity createTileEntity(@Nonnull World world, @Nonnull IBlockState state) {
+        return new PresentTileEntity();
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createNewTileEntity(@Nonnull World worldIn, int meta) {
         return new PresentTileEntity();
     }
 
