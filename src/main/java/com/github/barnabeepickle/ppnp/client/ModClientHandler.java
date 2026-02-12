@@ -12,6 +12,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Objects;
 
+import static com.github.barnabeepickle.ppnp.events.ModBlocks.*;
+
 public class ModClientHandler {
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
@@ -40,7 +42,7 @@ public class ModClientHandler {
 
     public static void registerBlockItemModels() {
         // register block item models here
-
+        registerBlockItem(RED_PRESENT);
     }
 
     // Block Item model registration utility
