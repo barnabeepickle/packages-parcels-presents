@@ -1,5 +1,7 @@
 package com.github.barnabeepickle.ppnp.utils;
 
+import net.minecraft.util.math.MathHelper;
+
 public class ColorUtil {
     private static final int ALPHA = 255 << 24;
 
@@ -11,9 +13,9 @@ public class ColorUtil {
      * @return supplied RGB color in Decimal
      */
     public static int getColor(int r, int g, int b) {
-        r = Math.clamp(r, 0, 255);
-        g = Math.clamp(g, 0, 255);
-        b = Math.clamp(b, 0, 255);
+        r = MathHelper.clamp(r, 0, 255);
+        g = MathHelper.clamp(g, 0, 255);
+        b = MathHelper.clamp(b, 0, 255);
         return color(r, g, b);
     }
 
