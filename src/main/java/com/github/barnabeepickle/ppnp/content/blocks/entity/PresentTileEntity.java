@@ -9,7 +9,6 @@ import net.minecraft.util.NonNullList;
 import jakarta.annotation.Nullable;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class PresentTileEntity extends TileEntity {
     private NonNullList<ItemStack> contents = NonNullList.<ItemStack>withSize(18, ItemStack.EMPTY);
@@ -80,8 +79,8 @@ public class PresentTileEntity extends TileEntity {
         return this.creativePlayerDestroyed;
     }
 
-    public void setCreativePlayerDestroyed(boolean p_190579_1_) {
-        this.creativePlayerDestroyed = p_190579_1_;
+    public void setCreativePlayerDestroyed(boolean destroy) {
+        this.creativePlayerDestroyed = destroy;
     }
 
     public boolean shouldDrop() {
