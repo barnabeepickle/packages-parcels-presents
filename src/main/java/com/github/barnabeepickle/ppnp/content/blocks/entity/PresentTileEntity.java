@@ -13,26 +13,23 @@ import java.util.Objects;
 public class PresentTileEntity extends TileEntity {
     private NonNullList<ItemStack> contents = NonNullList.<ItemStack>withSize(18, ItemStack.EMPTY);
     private boolean creativePlayerDestroyed;
-    @Nullable
-    private String targetPlayer = null;
-    @Nullable
-    private String ownerPlayer = null;
+    private String targetPlayer = "";
+    private String ownerPlayer = "";
 
     public PresentTileEntity() {
 
     }
 
     public boolean hasTargetPlayer() {
-        return targetPlayer != null;
+        return !Objects.equals(targetPlayer, "");
     }
 
     public boolean hasOwnerPlayer() {
-        return ownerPlayer != null;
+        return !Objects.equals(ownerPlayer, "");
     }
 
     public boolean isPlayerTarget(EntityPlayer player) {
         if (this.hasTargetPlayer()) {
-            assert targetPlayer != null;
             return Objects.equals(player.getName(), targetPlayer);
         }
         return false;
@@ -40,7 +37,6 @@ public class PresentTileEntity extends TileEntity {
 
     public boolean isPlayerOwner(EntityPlayer player) {
         if (this.hasOwnerPlayer()) {
-            assert ownerPlayer != null;
             return Objects.equals(player.getName(), ownerPlayer);
         }
         return false;
