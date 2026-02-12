@@ -103,7 +103,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     }
 
     public NBTTagCompound saveToNbt(NBTTagCompound nbt) {
-        ItemStackHelper.saveAllItems(nbt, this.contents, false);
+        ItemStackHelper.saveAllItems(nbt, this.contents);
         nbt.setString("target_player", this.targetPlayer);
         nbt.setString("owner_player", this.ownerPlayer);
 
