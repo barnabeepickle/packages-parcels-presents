@@ -152,13 +152,21 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                         .size(162, 8)
                         .left(7)
                         .top(5)
-                ).child(new ItemSlot().slot(
-                        new ModularSlot(this.itemHandler, 0)
-                                .slotGroup(presentSlots)
-                        )
                 );
 
-
+        for (int i = 0; i <= SLOT_COUNT; i++) {
+            if (i <= 9) {
+                panel.child(new ItemSlot().slot(
+                        new ModularSlot(this.itemHandler, i)
+                                .slotGroup(presentSlots)
+                ).left((i * 18) + 7).top((i * 18) + 16));
+            } else {
+                panel.child(new ItemSlot().slot(
+                        new ModularSlot(this.itemHandler, i)
+                                .slotGroup(presentSlots)
+                ).left(((i - 9) * 18) + 7).top(((i - 9) * 18) + 32));
+            }
+        }
 
         return panel;
     }
