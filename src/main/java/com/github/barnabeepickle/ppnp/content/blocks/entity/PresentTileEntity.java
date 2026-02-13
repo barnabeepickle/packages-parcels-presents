@@ -9,6 +9,7 @@ import com.cleanroommc.modularui.screen.UISettings;
 import com.cleanroommc.modularui.value.sync.PanelSyncManager;
 import com.cleanroommc.modularui.widgets.RichTextWidget;
 import com.cleanroommc.modularui.widgets.slot.ItemSlot;
+import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.github.barnabeepickle.ppnp.Tags;
 import net.minecraft.client.resources.I18n;
@@ -20,12 +21,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiData> {
-    private NonNullList<ItemStack> contents = NonNullList.<ItemStack>withSize(18, ItemStack.EMPTY);
+    private static final int SLOT_COUNT = 18;
+
+    private final ItemStackHandler itemHandler = new ItemStackHandler(SLOT_COUNT);
+
     private boolean creativePlayerDestroyed;
     private String targetPlayer = "";
     private String ownerPlayer = "";
@@ -73,12 +79,12 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     }
 
     public int getSizeInventory() {
-        return 18;
+        return SLOT_COUNT;
     }
 
     public boolean isEmpty() {
-        for (ItemStack itemstack : this.contents) {
-            if (!itemstack.isEmpty()) {
+        for (int i = 0; i < SLOT_COUNT; i++) {
+            if (itemHandler.getStackInSlot(i).isEmpty()) {
                 return false;
             }
         }
@@ -113,7 +119,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     }
 
     public NBTTagCompound saveToNbt(NBTTagCompound nbt) {
-        ItemStackHelper.saveAllItems(nbt, this.contents);
+        nbt.setTag("present_inv", this.itemHandler.serializeNBT());
         nbt.setString("target_player", this.targetPlayer);
         nbt.setString("owner_player", this.ownerPlayer);
 
@@ -121,13 +127,9 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     }
 
     public void loadFromNbt(NBTTagCompound nbt) {
-        ItemStackHelper.loadAllItems(nbt, this.contents);
+        this.itemHandler.deserializeNBT(nbt.getCompoundTag("present_inv"));
         this.targetPlayer = nbt.getString("target_player");
         this.ownerPlayer = nbt.getString("owner_player");
-    }
-
-    protected NonNullList<ItemStack> getItems() {
-        return this.contents;
     }
 
     // ModularUI stuff below
@@ -140,6 +142,9 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
     @Override
     public ModularPanel buildUI(PosGuiData guiData, PanelSyncManager syncManager, UISettings settings) {
+        SlotGroup presentSlots = new SlotGroup("present_slot_group", 9, true);
+        syncManager.registerSlotGroup(presentSlots);
+
         ModularPanel panel = ModularPanel.defaultPanel("present_gui");
         panel.bindPlayerInventory()
                 .child(new RichTextWidget()
@@ -147,9 +152,10 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                         .size(162, 8)
                         .left(7)
                         .top(5)
-                ).child(new ItemSlot()
-                        .left(7)
-                        .top(16)
+                ).child(new ItemSlot().slot(
+                        new ModularSlot(this.itemHandler, -1)
+                                .slotGroup(presentSlots)
+                        )
                 );
         return panel;
     }
