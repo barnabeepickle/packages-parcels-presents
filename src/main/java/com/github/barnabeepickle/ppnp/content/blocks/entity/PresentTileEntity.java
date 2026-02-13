@@ -218,8 +218,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                 .addLine(I18n.format("container.present.target", this.getTargetPlayer()))
                 .size(162, 8)
                 .pos(7, 68);
-        // this try statement handles not being able to get the UUID
-        // often because your in an offline instance of the game (like the dev environment)
+        // same as above
         try {
             //noinspection DataFlowIssue
             targetNameText.addTooltipLine(FMLCommonHandler
