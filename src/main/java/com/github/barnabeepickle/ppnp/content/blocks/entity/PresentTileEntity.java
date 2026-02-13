@@ -5,13 +5,15 @@ import com.cleanroommc.modularui.factory.PosGuiData;
 import com.cleanroommc.modularui.screen.ModularPanel;
 import com.cleanroommc.modularui.screen.ModularScreen;
 import com.cleanroommc.modularui.screen.UISettings;
+import com.cleanroommc.modularui.value.BoolValue;
 import com.cleanroommc.modularui.value.sync.PanelSyncManager;
+import com.cleanroommc.modularui.widgets.ButtonWidget;
 import com.cleanroommc.modularui.widgets.RichTextWidget;
+import com.cleanroommc.modularui.widgets.ToggleButton;
 import com.cleanroommc.modularui.widgets.slot.ItemSlot;
 import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.github.barnabeepickle.ppnp.Tags;
-import com.github.barnabeepickle.ppnp.bbbMod;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,18 +29,30 @@ import java.util.Objects;
 
 public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiData> {
     private static final int SLOT_COUNT = 18;
-
     private final ItemStackHandler itemHandler = new ItemStackHandler(SLOT_COUNT);
 
     private boolean creativePlayerDestroyed;
 
+    private final BoolValue anonymous = new BoolValue(false);
     private String targetPlayer = "";
-
     private String ownerPlayer = "";
 
     public PresentTileEntity() {
 
     }
+
+    public void makeAnonymous() {
+        this.anonymous.setValue(true);
+    }
+
+    public void makeNotAnonymous() {
+        this.anonymous.setValue(false);
+    }
+
+    public boolean isAnonymous() {
+        return this.anonymous.getBoolValue();
+    }
+
 
     public boolean hasTargetPlayer() {
         return !Objects.equals(targetPlayer, "");
@@ -140,6 +154,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         nbt.setTag("present_inv", this.itemHandler.serializeNBT());
         nbt.setString("target_player", this.targetPlayer);
         nbt.setString("owner_player", this.ownerPlayer);
+        nbt.setBoolean("anonymous", this.anonymous.getBoolValue());
 
         return nbt;
     }
@@ -148,6 +163,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         this.itemHandler.deserializeNBT(nbt.getCompoundTag("present_inv"));
         this.targetPlayer = nbt.getString("target_player");
         this.ownerPlayer = nbt.getString("owner_player");
+        this.anonymous.setBoolValue(nbt.getBoolean("anonymous"));
     }
 
     @Override
@@ -193,9 +209,16 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         }
 
         // owner player display text
-        bbbMod.LOGGER.info(I18n.format("container.present.owner", this.getOwnerPlayer()));
+        String targetText;
+        if (this.isAnonymous()) {
+            targetText = I18n.format("container.present.owner", "Anonymous User");
+        } else {
+            targetText = I18n.format("container.present.owner", this.getOwnerPlayer());
+        }
+
+        //bbbMod.LOGGER.info(I18n.format("container.present.owner", this.getOwnerPlayer()) + " anyonymous: " + this.anonymous);
         RichTextWidget ownerNameText = new RichTextWidget()
-                .addLine(I18n.format("container.present.owner", this.getOwnerPlayer()))
+                .addLine(targetText)
                 .size(162, 8)
                 .pos(7, 56);
         // this try statement handles not being able to get the UUID
@@ -213,7 +236,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         }
 
         // target player display text
-        bbbMod.LOGGER.info(I18n.format("container.present.target", this.getTargetPlayer()));
+        //bbbMod.LOGGER.info(I18n.format("container.present.target", this.getTargetPlayer()));
         RichTextWidget targetNameText = new RichTextWidget()
                 .addLine(I18n.format("container.present.target", this.getTargetPlayer()))
                 .size(162, 8)
@@ -230,6 +253,16 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         } catch (NullPointerException ignored) { } finally {
             panel.child(targetNameText);
         }
+
+        // toggle button for changing if the present is anonymous or not (disabled for non-owner players)
+        ToggleButton buttonAnonymous = new ToggleButton()
+                .pos(133, 55)
+                .size(10)
+                .value(this.anonymous);
+        if (this.hasOwnerPlayer() && this.isPlayerOwner(guiData.getPlayer())) {
+            buttonAnonymous.disabled();
+        }
+        panel.child(buttonAnonymous);
 
         // add the player inventory
         panel.bindPlayerInventory();
