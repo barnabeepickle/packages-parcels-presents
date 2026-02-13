@@ -12,8 +12,8 @@ import com.cleanroommc.modularui.widgets.ToggleButton;
 import com.cleanroommc.modularui.widgets.slot.ItemSlot;
 import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
+import com.github.barnabeepickle.ppnp.PresentAnonymousSyncedAction;
 import com.github.barnabeepickle.ppnp.Tags;
-import com.github.barnabeepickle.ppnp.bbbMod;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -221,31 +221,40 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         }
 
         // owner player display text
-        String targetText;
-        if (this.isAnonymous()) {
-            targetText = I18n.format("container.present.owner", "Anonymous User");
-        } else {
-            targetText = I18n.format("container.present.owner", this.getOwnerPlayer());
-        }
-
         //bbbMod.LOGGER.info(I18n.format("container.present.owner", this.getOwnerPlayer()) + " | anyonymous: " + this.isAnonymous());
-        RichTextWidget ownerNameText = new RichTextWidget()
-                .addLine(targetText)
+
+        RichTextWidget ownerNameNormal = new RichTextWidget()
                 .size(162, 8)
-                .pos(7, 56);
-        // this try statement handles not being able to get the UUID
-        // often because your in an offline instance of the game (like the dev environment)
+                .pos(7, 56)
+                .addLine(I18n.format("container.present.owner", this.getOwnerPlayer()));
+        // this try statement handles not being able to get the UUID this is often
+        // because your in an offline instance of the game (like the dev environment)
         try {
             //noinspection DataFlowIssue
-            ownerNameText.addTooltipLine(FMLCommonHandler
+            ownerNameNormal.addTooltipLine(FMLCommonHandler
                     .instance()
                     .getMinecraftServerInstance()
                     .getPlayerList()
                     .getPlayerByUsername(this.getOwnerPlayer()).toString()
             );
-        } catch (NullPointerException ignored) { } finally {
-            panel.child(ownerNameText);
+        } catch (NullPointerException ignored) { }
+
+        RichTextWidget ownerNameAnonymous = new RichTextWidget()
+                .size(162, 8)
+                .pos(7, 56)
+                .addLine(I18n.format("container.present.owner", I18n.format("container.present.owner.anonymous")));
+
+        if (this.isAnonymous()) {
+            ownerNameNormal.disabled();
+            ownerNameAnonymous.setEnabled(true);
+        } else {
+            ownerNameAnonymous.disabled();
+            ownerNameNormal.setEnabled(true);
         }
+
+        panel.child(ownerNameNormal);
+        panel.child(ownerNameAnonymous);
+
 
         // target player display text
         //bbbMod.LOGGER.info(I18n.format("container.present.target", this.getTargetPlayer()));

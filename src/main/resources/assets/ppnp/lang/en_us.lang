@@ -6,6 +6,9 @@ container.present=Present
 container.present.owner=Giver: %s
 container.present.target=Receiver: %s
 
+container.present.owner.anonymous=Anonymous User
+container.present.owner.secret=Secret Santa
+
 feedback.present.you_owner=§aYou are now this present's gifter.
 feedback.present.no_owner=§cThis present has no gift giver, it might not be working.
 feedback.present.you_target=§aThis is your present.
