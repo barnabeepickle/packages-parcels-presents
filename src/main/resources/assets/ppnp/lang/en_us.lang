@@ -6,7 +6,9 @@ container.present=Present
 container.present.owner=Giver: %s
 container.present.target=Receiver: %s
 
-feedback.present.no_owner=This present has no gift giver, it might not be working.
-feedback.present.no_target=This present has no gift receiver so can be claimed by anyone.
+feedback.present.you_owner=§aYou are now this present's gifter.
+feedback.present.no_owner=§cThis present has no gift giver, it might not be working.
+feedback.present.you_target=§aThis is your present.
+feedback.present.no_target=§9This present has no gift receiver so can be claimed by anyone.
 
-tile.red_present.name=Red Present
+tile.red_present.name=§aRed§r Present

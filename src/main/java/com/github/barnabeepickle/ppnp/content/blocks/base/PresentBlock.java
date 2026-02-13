@@ -81,6 +81,7 @@ public abstract class PresentBlock extends ModBlock implements ITileEntityProvid
                     openPresentGUI(player, blockPos, USER_TARGET);
                     return true;
                 } else if (presentTileEntity.isPlayerTarget(player)) {
+                    player.sendStatusMessage(new TextComponentTranslation("feedback.present.you_target"), true);
                     // open target GUI here
                     openPresentGUI(player, blockPos, USER_TARGET);
                     return true;
@@ -103,6 +104,7 @@ public abstract class PresentBlock extends ModBlock implements ITileEntityProvid
 
             if (tileEntity instanceof PresentTileEntity presentTileEntity && entity instanceof EntityPlayer player) {
                 if (!presentTileEntity.hasOwnerPlayer()) {
+                    player.sendStatusMessage(new TextComponentTranslation("feedback.present.you_owner"), false);
                     presentTileEntity.setOwnerPlayer(player.getGameProfile());
                     presentTileEntity.markDirty();
                 }
