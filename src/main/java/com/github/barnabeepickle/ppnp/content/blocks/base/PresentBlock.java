@@ -1,7 +1,6 @@
 package com.github.barnabeepickle.ppnp.content.blocks.base;
 
 import com.cleanroommc.modularui.factory.GuiFactories;
-import com.github.barnabeepickle.ppnp.Tags;
 import com.github.barnabeepickle.ppnp.content.blocks.entity.PresentTileEntity;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.MapColor;
@@ -69,7 +68,7 @@ public abstract class PresentBlock extends ModBlock implements ITileEntityProvid
 
             if (tileEntity instanceof PresentTileEntity presentTileEntity) {
                 if (!presentTileEntity.hasOwnerPlayer()) {
-                    player.sendStatusMessage(new TextComponentTranslation("feedback." + Tags.MODID + ".present.no_owner"), false);
+                    player.sendStatusMessage(new TextComponentTranslation("feedback.present.no_owner"), false);
                 } else if (presentTileEntity.isPlayerOwner(player)) {
                     // open owner GUI here
                     openPresentGUI(player, blockPos, USER_OWNER);
@@ -77,7 +76,7 @@ public abstract class PresentBlock extends ModBlock implements ITileEntityProvid
                 }
 
                 if (!presentTileEntity.hasTargetPlayer()) {
-                    player.sendStatusMessage(new TextComponentTranslation("feedback." + Tags.MODID + ".present.no_target"), false);
+                    player.sendStatusMessage(new TextComponentTranslation("feedback.present.no_target"), false);
                     // open target GUI here
                     openPresentGUI(player, blockPos, USER_TARGET);
                     return true;
