@@ -12,7 +12,6 @@ import com.cleanroommc.modularui.widgets.ToggleButton;
 import com.cleanroommc.modularui.widgets.slot.ItemSlot;
 import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
-import com.github.barnabeepickle.ppnp.PresentAnonymousSyncedAction;
 import com.github.barnabeepickle.ppnp.Tags;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.state.IBlockState;
@@ -255,7 +254,6 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         panel.child(ownerNameNormal);
         panel.child(ownerNameAnonymous);
 
-
         // target player display text
         //bbbMod.LOGGER.info(I18n.format("container.present.target", this.getTargetPlayer()));
         RichTextWidget targetNameText = new RichTextWidget()
@@ -293,7 +291,10 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // add the player inventory
         panel.bindPlayerInventory();
 
-        // listener to sync data on ui close
+        // register listeners for various actions
+        // client & server listeners
+        buttonAnonymous.onUpdateListener(onAnonymousButtonPress(this, ownerNameNormal, ownerNameAnonymous));
+        // server only listeners
         if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
             syncManager.addCloseListener(onCloseUI(world, blockPos, world.getBlockState(blockPos)));
         }
@@ -301,10 +302,20 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         return panel;
     }
 
+    // sync data on UI close in order to keep the client from desyncing
     @SideOnly(Side.SERVER)
     public Consumer<EntityPlayer> onCloseUI(World world, BlockPos blockPos, IBlockState blockstate) {
-        if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
-            world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2);
+        world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2);
+        return null;
+    }
+
+    public Consumer<ToggleButton> onAnonymousButtonPress(PresentTileEntity tile, RichTextWidget normal, RichTextWidget secret) {
+        if (tile.isAnonymous()) {
+            normal.disabled();
+            secret.setEnabled(true);
+        } else {
+            secret.disabled();
+            normal.setEnabled(true);
         }
         return null;
     }
