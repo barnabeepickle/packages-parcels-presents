@@ -11,6 +11,7 @@ import com.cleanroommc.modularui.widgets.slot.ItemSlot;
 import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.github.barnabeepickle.ppnp.Tags;
+import com.github.barnabeepickle.ppnp.bbbMod;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -192,10 +193,11 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         }
 
         // owner player display text
+        bbbMod.LOGGER.info(I18n.format("container.present.owner", this.getOwnerPlayer()));
         RichTextWidget ownerNameText = new RichTextWidget()
-                .addLine(I18n.format("container.present.owner") + " " + this.getOwnerPlayer())
-                .size(100, 8)
-                .pos(7, 55);
+                .addLine(I18n.format("container.present.owner", this.getOwnerPlayer()))
+                .size(162, 8)
+                .pos(7, 56);
         // this try statement handles not being able to get the UUID
         // often because your in an offline instance of the game (like the dev environment)
         try {
@@ -204,10 +206,30 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                     .instance()
                     .getMinecraftServerInstance()
                     .getPlayerList()
-                    .getPlayerByUsername(this.ownerPlayer).toString()
+                    .getPlayerByUsername(this.getOwnerPlayer()).toString()
             );
         } catch (NullPointerException ignored) { } finally {
             panel.child(ownerNameText);
+        }
+
+        // target player display text
+        bbbMod.LOGGER.info(I18n.format("container.present.target", this.getTargetPlayer()));
+        RichTextWidget targetNameText = new RichTextWidget()
+                .addLine(I18n.format("container.present.target", this.getTargetPlayer()))
+                .size(162, 8)
+                .pos(7, 68);
+        // this try statement handles not being able to get the UUID
+        // often because your in an offline instance of the game (like the dev environment)
+        try {
+            //noinspection DataFlowIssue
+            targetNameText.addTooltipLine(FMLCommonHandler
+                    .instance()
+                    .getMinecraftServerInstance()
+                    .getPlayerList()
+                    .getPlayerByUsername(this.getTargetPlayer()).toString()
+            );
+        } catch (NullPointerException ignored) { } finally {
+            panel.child(targetNameText);
         }
 
         // add the player inventory

@@ -3,7 +3,8 @@ itemGroup.ppnp.primary=Baskets, Bottles & Boxes
 
 container.present=Present
 
-container.present.owner=Gift Giver:
+container.present.owner=Giver: %s
+container.present.target=Receiver: %s
 
 feedback.ppnp.present.no_owner=This present has no gift giver, it might not be working.
 feedback.ppnp.present.no_target=This present has no gift receiver so can be claimed by anyone.
