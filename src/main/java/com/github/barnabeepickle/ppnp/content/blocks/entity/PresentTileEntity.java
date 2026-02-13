@@ -83,7 +83,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     }
 
     public boolean isEmpty() {
-        for (int i = 0; i <= SLOT_COUNT; i++) {
+        for (int i = 0; i < SLOT_COUNT; i++) {
             if (itemHandler.getStackInSlot(i).isEmpty()) {
                 return false;
             }
@@ -154,7 +154,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                         .top(5)
                 );
 
-        for (int i = 0; i <= SLOT_COUNT; i++) {
+        for (int i = 0; i < SLOT_COUNT; i++) {
             if (i <= 9) {
                 panel.child(new ItemSlot().slot(
                         new ModularSlot(this.itemHandler, i)
