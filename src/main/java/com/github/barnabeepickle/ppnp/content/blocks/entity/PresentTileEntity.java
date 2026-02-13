@@ -16,13 +16,13 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
-import java.util.UUID;
 
 public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiData> {
     private static final int SLOT_COUNT = 18;
@@ -32,10 +32,8 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     private boolean creativePlayerDestroyed;
 
     private String targetPlayer = "";
-    private UUID targetPlayerUUID;
 
     private String ownerPlayer = "";
-    private UUID ownerPlayerUUID;
 
     public PresentTileEntity() {
 
@@ -67,17 +65,10 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         return this.targetPlayer;
     }
 
-    public UUID getTargetPlayerUUID() {
-        return this.targetPlayerUUID;
-    }
-
     public String getOwnerPlayer() {
         return this.ownerPlayer;
     }
 
-    public UUID getOwnerPlayerUUID() {
-        return this.ownerPlayerUUID;
-    }
 
     public void setTargetPlayer(String name) {
         this.targetPlayer = name;
@@ -87,14 +78,9 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         this.setOwnerPlayer(player.getName());
     }
 
-    public void setTargetPlayer(EntityPlayer player, UUID uuid) {
-        this.setOwnerPlayer(player);
-        this.targetPlayerUUID = uuid;
-    }
 
     public void setTargetPlayer(GameProfile profile) {
         this.setOwnerPlayer(profile.getName());
-        this.targetPlayerUUID = profile.getId();
     }
 
     public void setOwnerPlayer(String name) {
@@ -105,14 +91,8 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         this.setOwnerPlayer(player.getName());
     }
 
-    public void setOwnerPlayer(EntityPlayer player, UUID uuid) {
-        this.setOwnerPlayer(player);
-        this.ownerPlayerUUID = uuid;
-    }
-
     public void setOwnerPlayer(GameProfile profile) {
         this.setOwnerPlayer(profile.getName());
-        this.ownerPlayerUUID = profile.getId();
     }
 
     public int getSizeInventory() {
@@ -169,6 +149,16 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         this.ownerPlayer = nbt.getString("owner_player");
     }
 
+    @Override
+    public @Nonnull NBTTagCompound getUpdateTag() {
+        return this.writeToNBT(new NBTTagCompound());
+    }
+
+    @Override
+    public void handleUpdateTag(@Nonnull NBTTagCompound nbt) {
+        this.readFromNBT(nbt);
+    }
+
     // ModularUI stuff below
 
     @Override
@@ -199,6 +189,25 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                     new ModularSlot(this.itemHandler, i)
                             .slotGroup(presentSlots)
             ).pos((x * 18) + 7, (y * 18) + 16));
+        }
+
+        // owner player display text
+        RichTextWidget ownerNameText = new RichTextWidget()
+                .addLine(I18n.format("container.present.owner") + " " + this.getOwnerPlayer())
+                .size(100, 8)
+                .pos(7, 55);
+        // this try statement handles not being able to get the UUID
+        // often because your in an offline instance of the game (like the dev environment)
+        try {
+            //noinspection DataFlowIssue
+            ownerNameText.addTooltipLine(FMLCommonHandler
+                    .instance()
+                    .getMinecraftServerInstance()
+                    .getPlayerList()
+                    .getPlayerByUsername(this.ownerPlayer).toString()
+            );
+        } catch (NullPointerException ignored) { } finally {
+            panel.child(ownerNameText);
         }
 
         // add the player inventory
