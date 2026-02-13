@@ -13,13 +13,17 @@ import com.cleanroommc.modularui.widgets.slot.ItemSlot;
 import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.github.barnabeepickle.ppnp.Tags;
+import com.github.barnabeepickle.ppnp.bbbMod;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -27,6 +31,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiData> {
     private static final int SLOT_COUNT = 18;
@@ -190,6 +195,9 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
     @Override
     public ModularPanel buildUI(PosGuiData guiData, PanelSyncManager syncManager, UISettings settings) {
+        World world = guiData.getWorld();
+        BlockPos blockPos = guiData.getBlockPos();
+
         SlotGroup presentSlots = new SlotGroup("present_slot_group", 9, true);
         syncManager.registerSlotGroup(presentSlots);
 
@@ -220,7 +228,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
             targetText = I18n.format("container.present.owner", this.getOwnerPlayer());
         }
 
-        //bbbMod.LOGGER.info(I18n.format("container.present.owner", this.getOwnerPlayer()) + " anyonymous: " + this.anonymous);
+        bbbMod.LOGGER.info(I18n.format("container.present.owner", this.getOwnerPlayer()) + " | anyonymous: " + this.isAnonymous());
         RichTextWidget ownerNameText = new RichTextWidget()
                 .addLine(targetText)
                 .size(162, 8)
@@ -263,14 +271,30 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                 .pos(133, 55)
                 .size(10)
                 .value(this.anonymous);
-        if (this.hasOwnerPlayer() && this.isPlayerOwner(guiData.getPlayer())) {
-            buttonAnonymous.disabled();
+        if (this.hasOwnerPlayer()) {
+            if (this.isPlayerOwner(guiData.getPlayer())) {
+                buttonAnonymous.setEnabled(true);
+                bbbMod.LOGGER.info("current user player is owner");
+            } else {
+                buttonAnonymous.disabled();
+            }
         }
         panel.child(buttonAnonymous);
 
         // add the player inventory
         panel.bindPlayerInventory();
 
+        // listener to sync data on ui close
+        if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
+            syncManager.addCloseListener(onCloseUI(world, blockPos, world.getBlockState(blockPos)));
+        }
+
         return panel;
+    }
+
+    @SideOnly(Side.SERVER)
+    public Consumer<EntityPlayer> onCloseUI(World world, BlockPos blockPos, IBlockState blockstate) {
+        world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2);
+        return null;
     }
 }
