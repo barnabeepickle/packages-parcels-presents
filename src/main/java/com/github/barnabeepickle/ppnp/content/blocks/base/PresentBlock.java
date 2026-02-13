@@ -103,6 +103,7 @@ public abstract class PresentBlock extends ModBlock implements ITileEntityProvid
             TileEntity tileEntity = world.getTileEntity(blockPos);
 
             if (tileEntity instanceof PresentTileEntity presentTileEntity && entity instanceof EntityPlayer player) {
+                world.notifyBlockUpdate(blockPos, blockstate, blockstate, 3);
                 if (!presentTileEntity.hasOwnerPlayer()) {
                     player.sendStatusMessage(new TextComponentTranslation("feedback.present.you_owner"), false);
                     presentTileEntity.setOwnerPlayer(player.getGameProfile());
