@@ -294,7 +294,9 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
     @SideOnly(Side.SERVER)
     public Consumer<EntityPlayer> onCloseUI(World world, BlockPos blockPos, IBlockState blockstate) {
-        world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2);
+        if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
+            world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2);
+        }
         return null;
     }
 }
