@@ -104,7 +104,7 @@ public abstract class PresentBlock extends ModBlock implements ITileEntityProvid
 
             if (tileEntity instanceof PresentTileEntity presentTileEntity && entity instanceof EntityPlayer player) {
                 if (!presentTileEntity.hasOwnerPlayer()) {
-                    presentTileEntity.setOwnerPlayer(player);
+                    presentTileEntity.setOwnerPlayer(player.getGameProfile());
                     presentTileEntity.markDirty();
                 }
             }

@@ -1,6 +1,5 @@
 package com.github.barnabeepickle.ppnp.content.blocks.entity;
 
-import com.cleanroommc.modularui.ModularUI;
 import com.cleanroommc.modularui.api.IGuiHolder;
 import com.cleanroommc.modularui.factory.PosGuiData;
 import com.cleanroommc.modularui.screen.ModularPanel;
@@ -12,20 +11,18 @@ import com.cleanroommc.modularui.widgets.slot.ItemSlot;
 import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.github.barnabeepickle.ppnp.Tags;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.UUID;
 
 public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiData> {
     private static final int SLOT_COUNT = 18;
@@ -33,8 +30,12 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     private final ItemStackHandler itemHandler = new ItemStackHandler(SLOT_COUNT);
 
     private boolean creativePlayerDestroyed;
+
     private String targetPlayer = "";
+    private UUID targetPlayerUUID;
+
     private String ownerPlayer = "";
+    private UUID ownerPlayerUUID;
 
     public PresentTileEntity() {
 
@@ -66,16 +67,52 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         return this.targetPlayer;
     }
 
+    public UUID getTargetPlayerUUID() {
+        return this.targetPlayerUUID;
+    }
+
     public String getOwnerPlayer() {
         return this.ownerPlayer;
     }
 
+    public UUID getOwnerPlayerUUID() {
+        return this.ownerPlayerUUID;
+    }
+
+    public void setTargetPlayer(String name) {
+        this.targetPlayer = name;
+    }
+
     public void setTargetPlayer(EntityPlayer player) {
-        this.targetPlayer = player.getName();
+        this.setOwnerPlayer(player.getName());
+    }
+
+    public void setTargetPlayer(EntityPlayer player, UUID uuid) {
+        this.setOwnerPlayer(player);
+        this.targetPlayerUUID = uuid;
+    }
+
+    public void setTargetPlayer(GameProfile profile) {
+        this.setOwnerPlayer(profile.getName());
+        this.targetPlayerUUID = profile.getId();
+    }
+
+    public void setOwnerPlayer(String name) {
+        this.ownerPlayer = name;
     }
 
     public void setOwnerPlayer(EntityPlayer player) {
-        this.ownerPlayer = player.getName();
+        this.setOwnerPlayer(player.getName());
+    }
+
+    public void setOwnerPlayer(EntityPlayer player, UUID uuid) {
+        this.setOwnerPlayer(player);
+        this.ownerPlayerUUID = uuid;
+    }
+
+    public void setOwnerPlayer(GameProfile profile) {
+        this.setOwnerPlayer(profile.getName());
+        this.ownerPlayerUUID = profile.getId();
     }
 
     public int getSizeInventory() {
