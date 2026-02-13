@@ -146,27 +146,27 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         syncManager.registerSlotGroup(presentSlots);
 
         ModularPanel panel = ModularPanel.defaultPanel("present_gui");
-        panel.bindPlayerInventory()
-                .child(new RichTextWidget()
-                        .addLine(I18n.format("container.present"))
-                        .size(162, 8)
-                        .left(7)
-                        .top(5)
-                );
 
+        // add the name to the top of the UI
+        panel.child(new RichTextWidget()
+                .addLine(I18n.format("container.present"))
+                .size(162, 8)
+                .left(7)
+                .top(5)
+        );
+
+        // add the present's inventory
         for (int i = 0; i < SLOT_COUNT; i++) {
-            if (i <= 9) {
-                panel.child(new ItemSlot().slot(
-                        new ModularSlot(this.itemHandler, i)
-                                .slotGroup(presentSlots)
-                ).left((i * 18) + 7).top((i * 18) + 16));
-            } else {
-                panel.child(new ItemSlot().slot(
-                        new ModularSlot(this.itemHandler, i)
-                                .slotGroup(presentSlots)
-                ).left(((i - 9) * 18) + 7).top(((i - 9) * 18) + 32));
-            }
+            int x = i % 9;
+            int y = i / 9;
+            panel.child(new ItemSlot().slot(
+                    new ModularSlot(this.itemHandler, i)
+                            .slotGroup(presentSlots)
+            ).pos(x * 18, y * 18));
         }
+
+        // add the player inventory
+        panel.bindPlayerInventory();
 
         return panel;
     }
