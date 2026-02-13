@@ -151,8 +151,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         panel.child(new RichTextWidget()
                 .addLine(I18n.format("container.present"))
                 .size(162, 8)
-                .left(7)
-                .top(5)
+                .pos(7, 6)
         );
 
         // add the present's inventory
@@ -162,7 +161,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
             panel.child(new ItemSlot().slot(
                     new ModularSlot(this.itemHandler, i)
                             .slotGroup(presentSlots)
-            ).pos(x * 18, y * 18));
+            ).pos((x * 18) + 7, (y * 18) + 16));
         }
 
         // add the player inventory
