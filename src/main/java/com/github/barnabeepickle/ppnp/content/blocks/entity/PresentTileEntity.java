@@ -301,6 +301,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // listeners for various actions
         // client & server listeners
         syncManager.addOpenListener(entityPlayer -> {
+            ppnpMod.LOGGER.info("trying to invert button");
             buttonAnonymous.invertSelected(this.isAnonymous());
         });
         // server only listeners
