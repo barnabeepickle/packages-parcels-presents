@@ -3,6 +3,8 @@ package com.github.barnabeepickle.ppnp.content.blocks.entity;
 import com.cleanroommc.modularui.api.IGuiHolder;
 import com.cleanroommc.modularui.api.drawable.IKey;
 import com.cleanroommc.modularui.api.widget.IGuiAction;
+import com.cleanroommc.modularui.drawable.GuiTextures;
+import com.cleanroommc.modularui.drawable.UITexture;
 import com.cleanroommc.modularui.drawable.text.RichText;
 import com.cleanroommc.modularui.factory.PosGuiData;
 import com.cleanroommc.modularui.screen.ModularPanel;
@@ -27,6 +29,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -197,6 +200,13 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
     // ModularUI stuff below
 
+    UITexture EYE = UITexture.builder()
+            .location(Tags.MODID, "textures/gui/eye.png")
+            .imageSize(12, 24)
+            .iconColorType()
+            .name("eye")
+            .build();
+
     @Override
     @SideOnly(Side.CLIENT)
     public ModularScreen createScreen(PosGuiData guiData, ModularPanel mainPanel) {
@@ -271,8 +281,8 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
         // toggle button for changing if the present is anonymous or not (disabled for non-owner players)
         ToggleButton buttonAnonymous = new ToggleButton()
-                .pos(133, 55)
-                .size(10);
+                .pos(132, 55)
+                .size(12);
         if (this.hasOwnerPlayer()) {
             if (this.isPlayerOwner(guiData.getPlayer())) {
                 buttonAnonymous.setEnabled(true);
@@ -281,6 +291,8 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                 buttonAnonymous.disabled();
             }
         }
+        buttonAnonymous.overlay(EYE.getSubArea(0.0F, 0.0F, 1.0F, 0.5F));
+        buttonAnonymous.hoverOverlay(EYE.getSubArea(0.0F, 0.5F, 1.0F, 1.0F));
         // the button is pressed we toggle the anonymous boolean and mark the text as dirt so it gets updated
         buttonAnonymous.listenGuiAction((IGuiAction.MousePressed) mouseButton -> {
             if (buttonAnonymous.isBelowMouse()) {
