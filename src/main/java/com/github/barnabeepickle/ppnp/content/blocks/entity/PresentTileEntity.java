@@ -46,6 +46,10 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
     }
 
+    public void toggleAnonymous() {
+        this.anonymous.setValue(!this.anonymous.getBoolValue());
+    }
+
     public void makeAnonymous() {
         this.anonymous.setValue(true);
     }
@@ -221,7 +225,6 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
         // owner player display text
         //ppnpMod.LOGGER.info(IKey.lang("container.present.owner", this.getOwnerPlayer()) + " | anyonymous: " + this.isAnonymous());
-
         RichTextWidget ownerName = new RichTextWidget()
                 .size(162, 8)
                 .pos(7, 56);
@@ -236,13 +239,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                     .getPlayerByUsername(this.getOwnerPlayer()).toString()
             );
         } catch (NullPointerException ignored) { }
-
-        if (this.isAnonymous()) {
-            ownerName.addLine(IKey.lang("container.present.owner", this.getOwnerPlayer()));
-        } else {
-            ownerName.addLine(IKey.lang("container.present.owner", IKey.lang("container.present.owner.anonymous")));
-        }
-
+        this.switchText(ownerName);
         panel.child(ownerName);
 
         // target player display text
@@ -267,8 +264,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // toggle button for changing if the present is anonymous or not (disabled for non-owner players)
         ToggleButton buttonAnonymous = new ToggleButton()
                 .pos(133, 55)
-                .size(10)
-                .value(this.anonymous);
+                .size(10);
         if (this.hasOwnerPlayer()) {
             if (this.isPlayerOwner(guiData.getPlayer())) {
                 buttonAnonymous.setEnabled(true);
@@ -277,6 +273,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                 buttonAnonymous.disabled();
             }
         }
+        buttonAnonymous.invertSelected(this.isAnonymous());
         panel.child(buttonAnonymous);
 
         // add the player inventory
@@ -284,7 +281,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
         // register listeners for various actions
         // client & server listeners
-
+        buttonAnonymous.onUpdateListener(onAnonymousButtonPress(this));
         // server only listeners
         if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
             syncManager.addCloseListener(onCloseUI(world, blockPos, world.getBlockState(blockPos)));
@@ -298,5 +295,18 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     public Consumer<EntityPlayer> onCloseUI(World world, BlockPos blockPos, IBlockState blockstate) {
         world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2);
         return null;
+    }
+
+    public Consumer<ToggleButton> onAnonymousButtonPress(PresentTileEntity tile) {
+        tile.toggleAnonymous();
+        return null;
+    }
+
+    private void switchText(RichTextWidget ownerName) {
+        if (this.isAnonymous()) {
+            ownerName.addLine(IKey.lang("container.present.owner", this.getOwnerPlayer()));
+        } else {
+            ownerName.addLine(IKey.lang("container.present.owner", IKey.lang("container.present.owner.anonymous")));
+        }
     }
 }
