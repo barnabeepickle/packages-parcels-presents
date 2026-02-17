@@ -276,11 +276,12 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                 buttonAnonymous.disabled();
             }
         }
+        // the button is pressed we toggle the anonymous boolean and mark the text as dirt so it gets updated
         buttonAnonymous.listenGuiAction((IGuiAction.MousePressed) mouseButton -> {
             if (mouseButton == 0) {
                 //ppnpMod.LOGGER.info("Anonymous Toggle Button Pressed, action");
-                ownerRichText.markDirty();
                 toggleAnonymous();
+                ownerRichText.markDirty();
                 return true;
             }
             return false;
