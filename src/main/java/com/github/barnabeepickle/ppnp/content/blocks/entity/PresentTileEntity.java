@@ -2,6 +2,7 @@ package com.github.barnabeepickle.ppnp.content.blocks.entity;
 
 import com.cleanroommc.modularui.api.IGuiHolder;
 import com.cleanroommc.modularui.api.drawable.IKey;
+import com.cleanroommc.modularui.api.widget.IGuiAction;
 import com.cleanroommc.modularui.drawable.text.RichText;
 import com.cleanroommc.modularui.factory.PosGuiData;
 import com.cleanroommc.modularui.screen.ModularPanel;
@@ -276,6 +277,15 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                 buttonAnonymous.disabled();
             }
         }
+        buttonAnonymous.listenGuiAction((IGuiAction.MousePressed) mouseButton -> {
+            if (mouseButton == 0) {
+                //ppnpMod.LOGGER.info("Anonymous Toggle Button Pressed, action");
+                ownerName.markDirty();
+                toggleAnonymous();
+                return true;
+            }
+            return false;
+        });
         buttonAnonymous.invertSelected(this.isAnonymous());
         panel.child(buttonAnonymous);
 
@@ -284,7 +294,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
         // register listeners for various actions
         // client & server listeners
-        buttonAnonymous.onUpdateListener(onAnonymousButtonPress(this, ownerName));
+
         // server only listeners
         if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
             syncManager.addCloseListener(onCloseUI(world, blockPos, world.getBlockState(blockPos)));
@@ -297,13 +307,6 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     @SideOnly(Side.SERVER)
     public Consumer<EntityPlayer> onCloseUI(World world, BlockPos blockPos, IBlockState blockstate) {
         world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2);
-        return null;
-    }
-
-    public Consumer<ToggleButton> onAnonymousButtonPress(PresentTileEntity tile, RichTextWidget ownerName) {
-        ownerName.markDirty();
-        tile.toggleAnonymous();
-        ppnpMod.LOGGER.info("Anonymous Toggle Button Pressed");
         return null;
     }
 
