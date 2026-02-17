@@ -16,7 +16,6 @@ import com.cleanroommc.modularui.widgets.slot.ItemSlot;
 import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.github.barnabeepickle.ppnp.Tags;
-import com.github.barnabeepickle.ppnp.ppnpMod;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -228,14 +227,14 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
         // owner player display text
         //ppnpMod.LOGGER.info(IKey.lang("container.present.owner", this.getOwnerPlayer()) + " | anyonymous: " + this.isAnonymous());
-        RichTextWidget ownerName = new RichTextWidget()
+        RichTextWidget ownerRichText = new RichTextWidget()
                 .size(162, 8)
                 .pos(7, 56);
         // this try statement handles not being able to get the UUID this is often
         // because your in an offline instance of the game (like the dev environment)
         try {
             //noinspection DataFlowIssue
-            ownerName.addTooltipLine(FMLCommonHandler
+            ownerRichText.addTooltipLine(FMLCommonHandler
                     .instance()
                     .getMinecraftServerInstance()
                     .getPlayerList()
@@ -243,26 +242,26 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
             );
         } catch (NullPointerException ignored) { }
         // adds the text dependent on if this is an anonymous gift
-        ownerName.textBuilder(this::switchText);
-        panel.child(ownerName);
+        ownerRichText.textBuilder(this::switchText);
+        panel.child(ownerRichText);
 
         // target player display text
         //ppnpMod.LOGGER.info(IKey.lang("container.present.target", this.getTargetPlayer()));
-        RichTextWidget targetNameText = new RichTextWidget()
+        RichTextWidget targetRichText = new RichTextWidget()
                 .addLine(IKey.lang("container.present.target", this.getTargetPlayer()))
                 .size(162, 8)
                 .pos(7, 68);
         // same as above
         try {
             //noinspection DataFlowIssue
-            targetNameText.addTooltipLine(FMLCommonHandler
+            targetRichText.addTooltipLine(FMLCommonHandler
                     .instance()
                     .getMinecraftServerInstance()
                     .getPlayerList()
                     .getPlayerByUsername(this.getTargetPlayer()).toString()
             );
         } catch (NullPointerException ignored) { } finally {
-            panel.child(targetNameText);
+            panel.child(targetRichText);
         }
 
         // toggle button for changing if the present is anonymous or not (disabled for non-owner players)
@@ -280,7 +279,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         buttonAnonymous.listenGuiAction((IGuiAction.MousePressed) mouseButton -> {
             if (mouseButton == 0) {
                 //ppnpMod.LOGGER.info("Anonymous Toggle Button Pressed, action");
-                ownerName.markDirty();
+                ownerRichText.markDirty();
                 toggleAnonymous();
                 return true;
             }
