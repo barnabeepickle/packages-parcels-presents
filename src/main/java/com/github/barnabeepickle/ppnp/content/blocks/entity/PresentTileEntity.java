@@ -1,6 +1,7 @@
 package com.github.barnabeepickle.ppnp.content.blocks.entity;
 
 import com.cleanroommc.modularui.api.IGuiHolder;
+import com.cleanroommc.modularui.api.drawable.IKey;
 import com.cleanroommc.modularui.factory.PosGuiData;
 import com.cleanroommc.modularui.screen.ModularPanel;
 import com.cleanroommc.modularui.screen.ModularScreen;
@@ -15,7 +16,6 @@ import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.github.barnabeepickle.ppnp.Tags;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -204,7 +204,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
         // add the name to the top of the UI
         panel.child(new RichTextWidget()
-                .addLine(I18n.format("container.present"))
+                .addLine(IKey.lang("container.present"))
                 .size(162, 8)
                 .pos(7, 6)
         );
@@ -220,12 +220,12 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         }
 
         // owner player display text
-        //bbbMod.LOGGER.info(I18n.format("container.present.owner", this.getOwnerPlayer()) + " | anyonymous: " + this.isAnonymous());
+        //bbbMod.LOGGER.info(IKey.lang("container.present.owner", this.getOwnerPlayer()) + " | anyonymous: " + this.isAnonymous());
 
         RichTextWidget ownerNameNormal = new RichTextWidget()
                 .size(162, 8)
                 .pos(7, 56)
-                .addLine(I18n.format("container.present.owner", this.getOwnerPlayer()));
+                .addLine(IKey.lang("container.present.owner", this.getOwnerPlayer()));
         // this try statement handles not being able to get the UUID this is often
         // because your in an offline instance of the game (like the dev environment)
         try {
@@ -241,7 +241,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         RichTextWidget ownerNameAnonymous = new RichTextWidget()
                 .size(162, 8)
                 .pos(7, 56)
-                .addLine(I18n.format("container.present.owner", I18n.format("container.present.owner.anonymous")));
+                .addLine(IKey.lang("container.present.owner", IKey.lang("container.present.owner.anonymous")));
 
         if (this.isAnonymous()) {
             ownerNameNormal.disabled();
@@ -255,9 +255,9 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         panel.child(ownerNameAnonymous);
 
         // target player display text
-        //bbbMod.LOGGER.info(I18n.format("container.present.target", this.getTargetPlayer()));
+        //bbbMod.LOGGER.info(IKey.lang("container.present.target", this.getTargetPlayer()));
         RichTextWidget targetNameText = new RichTextWidget()
-                .addLine(I18n.format("container.present.target", this.getTargetPlayer()))
+                .addLine(IKey.lang("container.present.target", this.getTargetPlayer()))
                 .size(162, 8)
                 .pos(7, 68);
         // same as above
