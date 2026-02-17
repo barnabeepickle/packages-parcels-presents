@@ -283,14 +283,17 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         }
         // the button is pressed we toggle the anonymous boolean and mark the text as dirt so it gets updated
         buttonAnonymous.listenGuiAction((IGuiAction.MousePressed) mouseButton -> {
-            //ppnpMod.LOGGER.info("Anonymous Toggle Button Pressed, action");
-            toggleAnonymous();
-            if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-                NetworkHandler.INSTANCE.sendToServer(new PresentMessage(blockPos, anonymous.getBoolValue()));
+            if (buttonAnonymous.isBelowMouse()) {
+                //ppnpMod.LOGGER.info("Anonymous Toggle Button Pressed, action");
+                toggleAnonymous();
+                if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+                    NetworkHandler.INSTANCE.sendToServer(new PresentMessage(blockPos, anonymous.getBoolValue()));
+                }
+                ppnpMod.LOGGER.info("anon c | {}", this.isAnonymous());
+                ownerRichText.markDirty();
+                return true;
             }
-            ppnpMod.LOGGER.info("anon c | {}", this.isAnonymous());
-            ownerRichText.markDirty();
-            return true;
+            return false;
         });
         buttonAnonymous.invertSelected(this.isAnonymous());
         panel.child(buttonAnonymous);
@@ -298,7 +301,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // add the player inventory
         panel.bindPlayerInventory();
 
-        // listeners for various actions
+        // listeners for various actions`
         // client & server listeners
         syncManager.addOpenListener(entityPlayer -> {
             ppnpMod.LOGGER.info("trying to invert button");
