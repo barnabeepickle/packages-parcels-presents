@@ -53,6 +53,7 @@ public class PresentMessage implements IMessage {
                     } else {
                         tile.makeNotAnonymous();
                     }
+                    ppnpMod.LOGGER.info("anon s | {}", tile.isAnonymous());
                 });
             }
             // No response packet

@@ -283,11 +283,12 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         }
         // the button is pressed we toggle the anonymous boolean and mark the text as dirt so it gets updated
         buttonAnonymous.listenGuiAction((IGuiAction.MousePressed) mouseButton -> {
-            ppnpMod.LOGGER.info("Anonymous Toggle Button Pressed, action");
+            //ppnpMod.LOGGER.info("Anonymous Toggle Button Pressed, action");
             toggleAnonymous();
             if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-                NetworkHandler.INSTANCE.sendToServer(new PresentMessage(blockPos, !anonymous.getBoolValue()));
+                NetworkHandler.INSTANCE.sendToServer(new PresentMessage(blockPos, anonymous.getBoolValue()));
             }
+            ppnpMod.LOGGER.info("anon c | {}", this.isAnonymous());
             ownerRichText.markDirty();
             return true;
         });
@@ -297,22 +298,19 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // add the player inventory
         panel.bindPlayerInventory();
 
-        // register listeners for various actions
+        // listeners for various actions
         // client & server listeners
-
+        syncManager.addOpenListener(entityPlayer -> {
+            buttonAnonymous.invertSelected(this.isAnonymous());
+        });
         // server only listeners
         if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
-            syncManager.addCloseListener(onCloseUI(world, blockPos, world.getBlockState(blockPos)));
+            syncManager.addCloseListener(entityPlayer -> {
+                world.notifyBlockUpdate(blockPos, world.getBlockState(blockPos), world.getBlockState(blockPos), 2);
+            });
         }
 
         return panel;
-    }
-
-    // sync data on UI close in order to keep the client from desyncing
-    @SideOnly(Side.SERVER)
-    public Consumer<EntityPlayer> onCloseUI(World world, BlockPos blockPos, IBlockState blockstate) {
-        world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2);
-        return null;
     }
 
     private void switchText(RichText richText) {
