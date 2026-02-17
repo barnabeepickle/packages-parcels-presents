@@ -14,6 +14,7 @@ import com.cleanroommc.modularui.widgets.slot.ItemSlot;
 import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.github.barnabeepickle.ppnp.Tags;
+import com.github.barnabeepickle.ppnp.ppnpMod;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -300,6 +301,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     public Consumer<ToggleButton> onAnonymousButtonPress(PresentTileEntity tile, RichTextWidget ownerName) {
         ownerName.markDirty();
         tile.toggleAnonymous();
+        ppnpMod.LOGGER.info("Anonymous Toggle Button Pressed");
         return null;
     }
 
