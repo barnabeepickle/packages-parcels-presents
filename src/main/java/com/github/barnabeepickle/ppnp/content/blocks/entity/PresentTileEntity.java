@@ -225,7 +225,6 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         RichTextWidget ownerName = new RichTextWidget()
                 .size(162, 8)
                 .pos(7, 56);
-
         // this try statement handles not being able to get the UUID this is often
         // because your in an offline instance of the game (like the dev environment)
         try {
