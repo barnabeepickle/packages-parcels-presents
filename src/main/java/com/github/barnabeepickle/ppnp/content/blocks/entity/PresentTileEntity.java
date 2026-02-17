@@ -317,11 +317,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // client & server listeners
         syncManager.addOpenListener(entityPlayer -> {
             ppnpMod.LOGGER.info("trying to invert button");
-            if (this.isAnonymous()) {
-                buttonAnonymous.setState(0, true);
-            } else {
-                buttonAnonymous.setState(1, true);
-            }
+            // TODO: restore toggle button state here
         });
         // server only listeners
         if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
