@@ -45,11 +45,9 @@ public class PresentMessage implements IMessage {
             EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
             BlockPos presentBlockPos = message.blockPos;
             boolean anonymous = message.anonymous;
-            if (serverPlayer.getServerWorld().getTileEntity(presentBlockPos) instanceof PresentTileEntity) {
+            if (serverPlayer.getServerWorld().getTileEntity(presentBlockPos) instanceof PresentTileEntity tile) {
                 // Execute the action on the main server thread by adding it as a scheduled task
                 serverPlayer.getServerWorld().addScheduledTask(() -> {
-                    PresentTileEntity tile = (PresentTileEntity) serverPlayer.getServerWorld().getTileEntity(presentBlockPos);
-                    assert tile != null;
                     if (anonymous) {
                         tile.makeAnonymous();
                     } else {
