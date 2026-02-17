@@ -241,10 +241,8 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                     .getPlayerByUsername(this.getOwnerPlayer()).toString()
             );
         } catch (NullPointerException ignored) { }
-        ownerName.textBuilder(richText -> {
-            // adds the text dependent on if this is an anonymous gift
-            this.switchText(richText);
-        });
+        // adds the text dependent on if this is an anonymous gift
+        ownerName.textBuilder(this::switchText);
         panel.child(ownerName);
 
         // target player display text
