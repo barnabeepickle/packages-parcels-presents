@@ -16,9 +16,13 @@ import com.cleanroommc.modularui.widgets.slot.ItemSlot;
 import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.github.barnabeepickle.ppnp.Tags;
+import com.github.barnabeepickle.ppnp.networking.NetworkHandler;
+import com.github.barnabeepickle.ppnp.networking.messages.PresentMessage;
+import com.github.barnabeepickle.ppnp.ppnpMod;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -31,6 +35,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -278,13 +283,13 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         }
         // the button is pressed we toggle the anonymous boolean and mark the text as dirt so it gets updated
         buttonAnonymous.listenGuiAction((IGuiAction.MousePressed) mouseButton -> {
-            if (mouseButton == 0) {
-                //ppnpMod.LOGGER.info("Anonymous Toggle Button Pressed, action");
-                toggleAnonymous();
-                ownerRichText.markDirty();
-                return true;
+            ppnpMod.LOGGER.info("Anonymous Toggle Button Pressed, action");
+            toggleAnonymous();
+            if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+                NetworkHandler.INSTANCE.sendToServer(new PresentMessage(blockPos, !anonymous.getBoolValue()));
             }
-            return false;
+            ownerRichText.markDirty();
+            return true;
         });
         buttonAnonymous.invertSelected(this.isAnonymous());
         panel.child(buttonAnonymous);
