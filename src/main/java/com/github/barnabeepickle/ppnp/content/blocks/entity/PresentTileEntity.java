@@ -2,6 +2,7 @@ package com.github.barnabeepickle.ppnp.content.blocks.entity;
 
 import com.cleanroommc.modularui.api.IGuiHolder;
 import com.cleanroommc.modularui.api.drawable.IKey;
+import com.cleanroommc.modularui.drawable.text.RichText;
 import com.cleanroommc.modularui.factory.PosGuiData;
 import com.cleanroommc.modularui.screen.ModularPanel;
 import com.cleanroommc.modularui.screen.ModularScreen;
@@ -240,7 +241,10 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                     .getPlayerByUsername(this.getOwnerPlayer()).toString()
             );
         } catch (NullPointerException ignored) { }
-        this.switchText(ownerName);
+        ownerName.textBuilder(richText -> {
+            // adds the text dependent on if this is an anonymous gift
+            this.switchText(richText);
+        });
         panel.child(ownerName);
 
         // target player display text
@@ -305,11 +309,11 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         return null;
     }
 
-    private void switchText(RichTextWidget ownerName) {
+    private void switchText(RichText richText) {
         if (this.isAnonymous()) {
-            ownerName.addLine(IKey.lang("container.present.owner", this.getOwnerPlayer()));
+            richText.addLine(IKey.lang("container.present.owner", this.getOwnerPlayer()));
         } else {
-            ownerName.addLine(IKey.lang("container.present.owner", IKey.lang("container.present.owner.anonymous")));
+            richText.addLine(IKey.lang("container.present.owner", IKey.lang("container.present.owner.anonymous")));
         }
     }
 }
