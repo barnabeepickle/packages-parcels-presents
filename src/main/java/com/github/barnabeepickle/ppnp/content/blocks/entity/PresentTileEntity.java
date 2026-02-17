@@ -220,7 +220,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         }
 
         // owner player display text
-        //bbbMod.LOGGER.info(IKey.lang("container.present.owner", this.getOwnerPlayer()) + " | anyonymous: " + this.isAnonymous());
+        //ppnpMod.LOGGER.info(IKey.lang("container.present.owner", this.getOwnerPlayer()) + " | anyonymous: " + this.isAnonymous());
 
         RichTextWidget ownerName = new RichTextWidget()
                 .size(162, 8)
@@ -247,7 +247,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         panel.child(ownerName);
 
         // target player display text
-        //bbbMod.LOGGER.info(IKey.lang("container.present.target", this.getTargetPlayer()));
+        //ppnpMod.LOGGER.info(IKey.lang("container.present.target", this.getTargetPlayer()));
         RichTextWidget targetNameText = new RichTextWidget()
                 .addLine(IKey.lang("container.present.target", this.getTargetPlayer()))
                 .size(162, 8)
@@ -273,7 +273,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         if (this.hasOwnerPlayer()) {
             if (this.isPlayerOwner(guiData.getPlayer())) {
                 buttonAnonymous.setEnabled(true);
-                //bbbMod.LOGGER.info("current user player is owner");
+                //ppnpMod.LOGGER.info("current user player is owner");
             } else {
                 buttonAnonymous.disabled();
             }
