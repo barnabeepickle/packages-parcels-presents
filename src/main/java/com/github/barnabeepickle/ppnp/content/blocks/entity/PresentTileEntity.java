@@ -281,8 +281,8 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
         // toggle button for changing if the present is anonymous or not (disabled for non-owner players)
         ToggleButton buttonAnonymous = new ToggleButton()
-                .pos(132, 55)
-                .size(12);
+                .pos(130, 54)
+                .size(13, 12);
         if (this.hasOwnerPlayer()) {
             if (this.isPlayerOwner(guiData.getPlayer())) {
                 buttonAnonymous.setEnabled(true);
@@ -291,8 +291,8 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                 buttonAnonymous.disabled();
             }
         }
-        buttonAnonymous.overlay(EYE.getSubArea(0.0F, 0.0F, 1.0F, 0.5F));
-        buttonAnonymous.hoverOverlay(EYE.getSubArea(0.0F, 0.5F, 1.0F, 1.0F));
+        buttonAnonymous.overlay(EYE.getSubArea(0.0F, 0.5F, 1.0F, 1.0F));
+        buttonAnonymous.hoverOverlay(EYE.getSubArea(0.0F, 0.0F, 1.0F, 0.5F));
         // the button is pressed we toggle the anonymous boolean and mark the text as dirt so it gets updated
         buttonAnonymous.listenGuiAction((IGuiAction.MousePressed) mouseButton -> {
             if (buttonAnonymous.isBelowMouse()) {
@@ -317,7 +317,11 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // client & server listeners
         syncManager.addOpenListener(entityPlayer -> {
             ppnpMod.LOGGER.info("trying to invert button");
-            buttonAnonymous.invertSelected(this.isAnonymous());
+            if (this.isAnonymous()) {
+                buttonAnonymous.setState(0, true);
+            } else {
+                buttonAnonymous.setState(1, true);
+            }
         });
         // server only listeners
         if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
