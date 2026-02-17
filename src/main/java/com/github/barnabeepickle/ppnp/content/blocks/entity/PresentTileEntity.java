@@ -281,7 +281,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
         // register listeners for various actions
         // client & server listeners
-        buttonAnonymous.onUpdateListener(onAnonymousButtonPress(this));
+        buttonAnonymous.onUpdateListener(onAnonymousButtonPress(this, ownerName));
         // server only listeners
         if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
             syncManager.addCloseListener(onCloseUI(world, blockPos, world.getBlockState(blockPos)));
@@ -297,7 +297,8 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         return null;
     }
 
-    public Consumer<ToggleButton> onAnonymousButtonPress(PresentTileEntity tile) {
+    public Consumer<ToggleButton> onAnonymousButtonPress(PresentTileEntity tile, RichTextWidget ownerName) {
+        ownerName.markDirty();
         tile.toggleAnonymous();
         return null;
     }
