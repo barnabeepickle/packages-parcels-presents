@@ -222,15 +222,15 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // owner player display text
         //bbbMod.LOGGER.info(IKey.lang("container.present.owner", this.getOwnerPlayer()) + " | anyonymous: " + this.isAnonymous());
 
-        RichTextWidget ownerNameNormal = new RichTextWidget()
+        RichTextWidget ownerName = new RichTextWidget()
                 .size(162, 8)
-                .pos(7, 56)
-                .addLine(IKey.lang("container.present.owner", this.getOwnerPlayer()));
+                .pos(7, 56);
+
         // this try statement handles not being able to get the UUID this is often
         // because your in an offline instance of the game (like the dev environment)
         try {
             //noinspection DataFlowIssue
-            ownerNameNormal.addTooltipLine(FMLCommonHandler
+            ownerName.addTooltipLine(FMLCommonHandler
                     .instance()
                     .getMinecraftServerInstance()
                     .getPlayerList()
@@ -238,21 +238,13 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
             );
         } catch (NullPointerException ignored) { }
 
-        RichTextWidget ownerNameAnonymous = new RichTextWidget()
-                .size(162, 8)
-                .pos(7, 56)
-                .addLine(IKey.lang("container.present.owner", IKey.lang("container.present.owner.anonymous")));
-
         if (this.isAnonymous()) {
-            ownerNameNormal.disabled();
-            ownerNameAnonymous.setEnabled(true);
+            ownerName.addLine(IKey.lang("container.present.owner", this.getOwnerPlayer()));
         } else {
-            ownerNameAnonymous.disabled();
-            ownerNameNormal.setEnabled(true);
+            ownerName.addLine(IKey.lang("container.present.owner", IKey.lang("container.present.owner.anonymous")));
         }
 
-        panel.child(ownerNameNormal);
-        panel.child(ownerNameAnonymous);
+        panel.child(ownerName);
 
         // target player display text
         //bbbMod.LOGGER.info(IKey.lang("container.present.target", this.getTargetPlayer()));
@@ -293,7 +285,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
         // register listeners for various actions
         // client & server listeners
-        buttonAnonymous.onUpdateListener(onAnonymousButtonPress(this, ownerNameNormal, ownerNameAnonymous));
+
         // server only listeners
         if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
             syncManager.addCloseListener(onCloseUI(world, blockPos, world.getBlockState(blockPos)));
@@ -306,17 +298,6 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     @SideOnly(Side.SERVER)
     public Consumer<EntityPlayer> onCloseUI(World world, BlockPos blockPos, IBlockState blockstate) {
         world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2);
-        return null;
-    }
-
-    public Consumer<ToggleButton> onAnonymousButtonPress(PresentTileEntity tile, RichTextWidget normal, RichTextWidget secret) {
-        if (tile.isAnonymous()) {
-            normal.disabled();
-            secret.setEnabled(true);
-        } else {
-            secret.disabled();
-            normal.setEnabled(true);
-        }
         return null;
     }
 }
