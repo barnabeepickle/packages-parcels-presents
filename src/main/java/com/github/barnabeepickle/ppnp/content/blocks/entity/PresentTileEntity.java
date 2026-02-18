@@ -309,10 +309,9 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
         // server only listeners
         if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
-            syncManager.addCloseListener(entityPlayer -> {
-                IBlockState blockstate = world.getBlockState(blockPos);
-                world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2);
-            });
+            IBlockState blockstate = world.getBlockState(blockPos);
+            syncManager.addOpenListener(entityPlayer -> world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2));
+            syncManager.addCloseListener(entityPlayer -> world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2));
         }
 
         return panel;
