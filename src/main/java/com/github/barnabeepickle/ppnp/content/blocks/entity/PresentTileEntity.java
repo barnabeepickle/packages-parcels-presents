@@ -3,7 +3,6 @@ package com.github.barnabeepickle.ppnp.content.blocks.entity;
 import com.cleanroommc.modularui.api.IGuiHolder;
 import com.cleanroommc.modularui.api.drawable.IKey;
 import com.cleanroommc.modularui.api.widget.IGuiAction;
-import com.cleanroommc.modularui.drawable.UITexture;
 import com.cleanroommc.modularui.drawable.text.RichText;
 import com.cleanroommc.modularui.factory.PosGuiData;
 import com.cleanroommc.modularui.screen.ModularPanel;
@@ -20,6 +19,8 @@ import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.cleanroommc.modularui.widgets.textfield.TextFieldWidget;
 import com.github.barnabeepickle.ppnp.Tags;
+import com.github.barnabeepickle.ppnp.networking.NetworkHandler;
+import com.github.barnabeepickle.ppnp.networking.messages.PresentOpenMessage;
 import com.github.barnabeepickle.ppnp.ppnpMod;
 import com.github.barnabeepickle.ppnp.ui.AssetsUI;
 import com.github.barnabeepickle.ppnp.utils.ChristmasUtil;
@@ -31,6 +32,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -39,6 +42,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 
 public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiData> {
@@ -52,9 +56,18 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     private String targetPlayer = "";
     private String ownerPlayer = "";
 
+    @Nullable
+    private EntityPlayer userPlayer = null;
+
     public PresentTileEntity() {
 
     }
+
+
+    public @Nullable EntityPlayer getUserPlayer() {
+        return userPlayer;
+    }
+
 
     public void toggleAnonymous() {
         this.anonymous = !this.isAnonymous();
@@ -198,6 +211,28 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         this.readFromNBT(nbt);
     }
 
+    public void openPresentNetwork(World world, BlockPos blockPos, EntityPlayer target, ModularPanel panel) {
+        NetworkHandler.INSTANCE.sendToServer(new PresentOpenMessage(blockPos));
+        this.openPresent(world, blockPos, target);
+        panel.closeIfOpen();
+    }
+
+    public void openPresent(World world, BlockPos blockPos, EntityPlayer target) {
+        if (world.isBlockLoaded(blockPos)) {
+            for (int i = 0; i < SLOT_COUNT; i++) {
+                target.addItemStackToInventory(this.itemHandler.getStackInSlot(i));
+                this.itemHandler.extractItem(i, this.itemHandler.getStackInSlot(i).getCount(), false);
+            }
+            if (FMLCommonHandler.instance().getSide().isServer()) {
+                IBlockState blockstate = world.getBlockState(blockPos);
+                blockstate.getBlock().breakBlock(world, blockPos, blockstate);
+                world.notifyBlockUpdate(blockPos, blockstate, world.getBlockState(blockPos), 2);
+            }
+            ppnpMod.LOGGER.info("trying to delete tile entity");
+            target.playSound(new SoundEvent(new ResourceLocation("block.end_gateway.spawn")), 0.5F, 0.75F);
+        }
+    }
+
     // ModularUI stuff below
 
     private final BooleanSyncValue anonymousSync = new BooleanSyncValue(() -> !this.anonymous, val -> this.anonymous = !val);
@@ -215,9 +250,10 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         World world = guiData.getWorld();
         BlockPos blockPos = guiData.getBlockPos();
         Block block = world.getBlockState(blockPos).getBlock();
+        EntityPlayer user = guiData.getPlayer();
 
-        boolean userOwner = this.hasOwnerPlayer() && this.isPlayerOwner(guiData.getPlayer());
-        boolean userTarget = !this.hasTargetPlayer() || this.isPlayerTarget(guiData.getPlayer());
+        boolean userOwner = this.hasOwnerPlayer() && this.isPlayerOwner(user);
+        boolean userTarget = !this.hasTargetPlayer() || this.isPlayerTarget(user);
 
         SlotGroup presentSlotGroup = new SlotGroup("present_slot_group", 9, true);
         syncManager.registerSlotGroup(presentSlotGroup);
@@ -321,8 +357,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                     text.addLine(IKey.lang("container.present.open.tooltip"));
                 })
                 .onMousePressed(mouseButton -> {
-                    ppnpMod.LOGGER.info("present button pressed");
-                    // open the present here
+                    this.openPresentNetwork(world, blockPos, user, panel);
                     return true;
                 });
         //buttonAnonymous.setEnabled(userTarget);
@@ -335,10 +370,20 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // client & server listeners
 
         // server only listeners
-        if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
+        syncManager.addOpenListener(entityPlayer -> {
+            userPlayer = user;
+        });
+        syncManager.addCloseListener(entityPlayer -> {
+            userPlayer = null;
+        });
+        if (FMLCommonHandler.instance().getSide().isServer()) {
             IBlockState blockstate = world.getBlockState(blockPos);
-            syncManager.addOpenListener(entityPlayer -> world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2));
-            syncManager.addCloseListener(entityPlayer -> world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2));
+            syncManager.addOpenListener(entityPlayer -> {
+                world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2);
+            });
+            syncManager.addCloseListener(entityPlayer -> {
+                world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2);
+            });
         }
 
         return panel;

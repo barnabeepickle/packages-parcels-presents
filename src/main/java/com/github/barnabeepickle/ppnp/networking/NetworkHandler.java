@@ -1,7 +1,7 @@
 package com.github.barnabeepickle.ppnp.networking;
 
 import com.github.barnabeepickle.ppnp.Tags;
-import com.github.barnabeepickle.ppnp.networking.messages.PresentMessage;
+import com.github.barnabeepickle.ppnp.networking.messages.PresentOpenMessage;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -14,8 +14,8 @@ public class NetworkHandler {
     public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Tags.MODID);
 
     public static void initMessages() {
-        NetworkHandler.INSTANCE.registerMessage(PresentMessage.Handler.class, PresentMessage.class, id, Side.CLIENT);
-        NetworkHandler.INSTANCE.registerMessage(PresentMessage.Handler.class, PresentMessage.class, id, Side.SERVER);
+        NetworkHandler.INSTANCE.registerMessage(PresentOpenMessage.Handler.class, PresentOpenMessage.class, id, Side.CLIENT);
+        NetworkHandler.INSTANCE.registerMessage(PresentOpenMessage.Handler.class, PresentOpenMessage.class, id, Side.SERVER);
         id++;
 
     }

@@ -6,27 +6,25 @@ import com.github.barnabeepickle.ppnp.ppnpMod;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PresentMessage implements IMessage {
-    public PresentMessage() {
+public class PresentOpenMessage implements IMessage {
+    public PresentOpenMessage() {
 
     }
 
     private BlockPos blockPos;
-    private boolean anonymous;
 
-    public PresentMessage(BlockPos blockPos, boolean anonymous) {
+    public PresentOpenMessage(BlockPos blockPos) {
         this.blockPos = blockPos;
-        this.anonymous = anonymous;
     }
 
     @Override
     public void fromBytes(ByteBuf buf) {
         this.blockPos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
-        this.anonymous = buf.readBoolean();
     }
 
     @Override
@@ -34,27 +32,30 @@ public class PresentMessage implements IMessage {
         buf.writeInt(this.blockPos.getX());
         buf.writeInt(this.blockPos.getY());
         buf.writeInt(this.blockPos.getZ());
-        buf.writeBoolean(this.anonymous);
     }
 
-    public static class Handler implements IMessageHandler<PresentMessage, IMessage> {
+    public static class Handler implements IMessageHandler<PresentOpenMessage, IMessage> {
         @Override
-        public IMessage onMessage(PresentMessage message, MessageContext ctx) {
+        public IMessage onMessage(PresentOpenMessage message, MessageContext ctx) {
             //CharmMod.LOGGER.info("Server recieved packet from client");
             // This is the player the packet whose client sent the packet
             EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
+            WorldServer serverWorld = serverPlayer.getServerWorld();
             BlockPos presentBlockPos = message.blockPos;
-            boolean anonymous = message.anonymous;
-            if (serverPlayer.getServerWorld().getTileEntity(presentBlockPos) instanceof PresentTileEntity tile) {
-                // Execute the action on the main server thread by adding it as a scheduled task
-                serverPlayer.getServerWorld().addScheduledTask(() -> {
-                    if (anonymous) {
-                        tile.makeAnonymous();
-                    } else {
-                        tile.makeNotAnonymous();
+            ppnpMod.LOGGER.info("stage 0");
+            if (serverWorld.getTileEntity(presentBlockPos) instanceof PresentTileEntity tile) {
+                ppnpMod.LOGGER.info("stage 1 | {}", tile.getUserPlayer() == null);
+                if (tile.getUserPlayer() != null) {
+                    ppnpMod.LOGGER.info("stage 2");
+                    if (tile.getUserPlayer().getGameProfile() == serverPlayer.getGameProfile()) {
+                        ppnpMod.LOGGER.info("stage 3");
+                        // Execute the action on the main server thread by adding it as a scheduled task
+                        serverWorld.addScheduledTask(() -> {
+                            ppnpMod.LOGGER.info("stage 4");
+                            tile.openPresent(serverWorld, presentBlockPos, serverPlayer);
+                        });
                     }
-                    ppnpMod.LOGGER.info("anon s | {}", tile.isAnonymous());
-                });
+                }
             }
             // No response packet
             return null;
