@@ -19,7 +19,6 @@ import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.cleanroommc.modularui.widgets.textfield.TextFieldWidget;
 import com.github.barnabeepickle.ppnp.Tags;
-import com.github.barnabeepickle.ppnp.content.blocks.base.PresentBlock;
 import com.github.barnabeepickle.ppnp.utils.ChristmasUtil;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.Block;
@@ -37,6 +36,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiData> {
@@ -224,8 +224,8 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         boolean userOwner = this.hasOwnerPlayer() && this.isPlayerOwner(guiData.getPlayer());
         boolean userTarget = !this.hasTargetPlayer() || this.isPlayerTarget(guiData.getPlayer());
 
-        SlotGroup presentSlots = new SlotGroup("present_slot_group", 9, true);
-        syncManager.registerSlotGroup(presentSlots);
+        SlotGroup presentSlotGroup = new SlotGroup("present_slot_group", 9, true);
+        syncManager.registerSlotGroup(presentSlotGroup);
 
         ModularPanel panel = ModularPanel.defaultPanel("present_gui");
 
@@ -240,10 +240,14 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         for (int i = 0; i < SLOT_COUNT; i++) {
             int x = i % 9;
             int y = i / 9;
-            panel.child(new ItemSlot().slot(
+            ItemSlot currentSlot = new ItemSlot().slot(
                     new ModularSlot(this.itemHandler, i)
-                            .slotGroup(presentSlots)
-            ).pos((x * 18) + 7, (y * 18) + 16));
+                            .slotGroup(presentSlotGroup)
+            ).pos((x * 18) + 7, (y * 18) + 16);
+            if (!userOwner && !userTarget) {
+                currentSlot.getSlot().accessibility(false, false);
+            }
+            panel.child(currentSlot);
         }
 
         // owner player display text
