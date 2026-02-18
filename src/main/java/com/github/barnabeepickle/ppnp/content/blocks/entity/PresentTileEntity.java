@@ -12,6 +12,7 @@ import com.cleanroommc.modularui.screen.UISettings;
 import com.cleanroommc.modularui.value.sync.BooleanSyncValue;
 import com.cleanroommc.modularui.value.sync.PanelSyncManager;
 import com.cleanroommc.modularui.value.sync.StringSyncValue;
+import com.cleanroommc.modularui.widgets.ButtonWidget;
 import com.cleanroommc.modularui.widgets.RichTextWidget;
 import com.cleanroommc.modularui.widgets.ToggleButton;
 import com.cleanroommc.modularui.widgets.slot.ItemSlot;
@@ -19,6 +20,7 @@ import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.cleanroommc.modularui.widgets.textfield.TextFieldWidget;
 import com.github.barnabeepickle.ppnp.Tags;
+import com.github.barnabeepickle.ppnp.ppnpMod;
 import com.github.barnabeepickle.ppnp.utils.ChristmasUtil;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.Block;
@@ -36,7 +38,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiData> {
@@ -302,7 +303,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // toggle button for changing if the present is anonymous or not (disabled for non-owner players)
         ToggleButton buttonAnonymous = new ToggleButton()
                 .size(13, 12)
-                .pos(135, 55)
+                .pos(134, 55)
                 .value(anonymousSync);
         buttonAnonymous.setEnabled(userOwner);
         buttonAnonymous.overlay(EYE.getSubArea(0.0F, 0.5F, 1.0F, 1.0F));
@@ -316,6 +317,16 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
             return false;
         });
         panel.child(buttonAnonymous);
+
+        ButtonWidget openPresentButton = new ButtonWidget<>()
+                .size(24)
+                .pos(148,55)
+                .onMousePressed(mouseButton -> {
+                    ppnpMod.LOGGER.info("present button pressed");
+                    return true;
+                });
+        //buttonAnonymous.setEnabled(userTarget);
+        panel.child(openPresentButton);
 
         // add the player inventory
         panel.bindPlayerInventory();
