@@ -16,6 +16,7 @@ import com.cleanroommc.modularui.widgets.ToggleButton;
 import com.cleanroommc.modularui.widgets.slot.ItemSlot;
 import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
+import com.cleanroommc.modularui.widgets.textfield.TextFieldWidget;
 import com.github.barnabeepickle.ppnp.Tags;
 import com.github.barnabeepickle.ppnp.utils.ChristmasUtil;
 import com.mojang.authlib.GameProfile;
@@ -238,7 +239,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // owner player display text
         //ppnpMod.LOGGER.info(IKey.lang("container.present.owner", this.getOwnerPlayer()) + " | anyonymous: " + this.isAnonymous());
         RichTextWidget ownerRichText = new RichTextWidget()
-                .size(162, 8)
+                .size(118, 8)
                 .pos(7, 57);
         // this try statement handles not being able to get the UUID this is often
         // because your in an offline instance of the game (like the dev environment)
@@ -255,29 +256,10 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         ownerRichText.textBuilder(this::switchText);
         panel.child(ownerRichText);
 
-        // target player display text
-        //ppnpMod.LOGGER.info(IKey.lang("container.present.target", this.getTargetPlayer()));
-        RichTextWidget targetRichText = new RichTextWidget()
-                .addLine(IKey.lang("container.present.target", this.getTargetPlayer()))
-                .size(162, 8)
-                .pos(7, 70);
-        // same as above
-        try {
-            //noinspection DataFlowIssue
-            targetRichText.addTooltipLine(FMLCommonHandler
-                    .instance()
-                    .getMinecraftServerInstance()
-                    .getPlayerList()
-                    .getPlayerByUsername(this.getTargetPlayer()).toString()
-            );
-        } catch (NullPointerException ignored) { } finally {
-            panel.child(targetRichText);
-        }
-
         // toggle button for changing if the present is anonymous or not (disabled for non-owner players)
         ToggleButton buttonAnonymous = new ToggleButton()
-                .pos(128, 55)
                 .size(13, 12)
+                .pos(128, 55)
                 .value(anonymousSync);
         if (this.hasOwnerPlayer()) {
             if (this.isPlayerOwner(guiData.getPlayer())) {
@@ -298,6 +280,32 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
             return false;
         });
         panel.child(buttonAnonymous);
+
+        // target player display text
+        //ppnpMod.LOGGER.info(IKey.lang("container.present.target", this.getTargetPlayer()));
+        RichTextWidget targetRichText = new RichTextWidget()
+                .addLine(IKey.lang("container.present.target", this.getTargetPlayer()))
+                .size(118, 8)
+                .pos(7, 70);
+        // same as above
+        try {
+            //noinspection DataFlowIssue
+            targetRichText.addTooltipLine(FMLCommonHandler
+                    .instance()
+                    .getMinecraftServerInstance()
+                    .getPlayerList()
+                    .getPlayerByUsername(this.getTargetPlayer()).toString()
+            );
+        } catch (NullPointerException ignored) { }
+        if (this.hasOwnerPlayer()) {
+            if (this.isPlayerOwner(guiData.getPlayer())) {
+                targetRichText.setEnabled(true);
+                //ppnpMod.LOGGER.info("current user player is owner");
+            } else {
+                targetRichText.disabled();
+            }
+        }
+        panel.child(targetRichText);
 
         // add the player inventory
         panel.bindPlayerInventory();
