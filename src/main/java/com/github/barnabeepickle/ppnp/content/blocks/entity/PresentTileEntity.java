@@ -215,6 +215,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     public ModularPanel buildUI(PosGuiData guiData, PanelSyncManager syncManager, UISettings settings) {
         World world = guiData.getWorld();
         BlockPos blockPos = guiData.getBlockPos();
+        Block block = world.getBlockState(blockPos).getBlock();
 
         boolean userOwner = this.hasOwnerPlayer() && this.isPlayerOwner(guiData.getPlayer());
         boolean userTarget = !this.hasTargetPlayer() || this.isPlayerTarget(guiData.getPlayer());
@@ -225,11 +226,11 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         ModularPanel panel = ModularPanel.defaultPanel("present_gui");
 
         // add the name to the top of the UI
-        panel.child(new RichTextWidget()
-                .addLine(IKey.lang("container.present"))
-                .size(162, 8)
+        RichTextWidget containerTitle = new RichTextWidget()
+                .size(70, 8)
                 .pos(7, 6)
-        );
+                .addLine(block.getLocalizedName());
+        panel.child(containerTitle);
 
         // add the present's inventory
         for (int i = 0; i < SLOT_COUNT; i++) {
