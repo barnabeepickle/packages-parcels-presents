@@ -17,6 +17,7 @@ import com.cleanroommc.modularui.widgets.slot.ItemSlot;
 import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.github.barnabeepickle.ppnp.Tags;
+import com.github.barnabeepickle.ppnp.utils.ChristmasUtil;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -319,7 +320,13 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         if (this.isAnonymous()) {
             richText.addLine(IKey.lang("container.present.owner", this.getOwnerPlayer()));
         } else {
-            richText.addLine(IKey.lang("container.present.owner", IKey.lang("container.present.owner.anonymous")));
+            IKey anonymousText;
+            if (ChristmasUtil.isChristmas()) {
+                anonymousText = IKey.lang("container.present.owner.secret");
+            } else {
+                anonymousText = IKey.lang("container.present.owner.anonymous");
+            }
+            richText.addLine(IKey.lang("container.present.owner", anonymousText));
         }
     }
 }
