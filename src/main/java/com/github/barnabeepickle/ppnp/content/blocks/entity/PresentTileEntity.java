@@ -238,7 +238,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         //ppnpMod.LOGGER.info(IKey.lang("container.present.owner", this.getOwnerPlayer()) + " | anyonymous: " + this.isAnonymous());
         RichTextWidget ownerRichText = new RichTextWidget()
                 .size(162, 8)
-                .pos(7, 56);
+                .pos(7, 57);
         // this try statement handles not being able to get the UUID this is often
         // because your in an offline instance of the game (like the dev environment)
         try {
@@ -259,7 +259,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         RichTextWidget targetRichText = new RichTextWidget()
                 .addLine(IKey.lang("container.present.target", this.getTargetPlayer()))
                 .size(162, 8)
-                .pos(7, 68);
+                .pos(7, 70);
         // same as above
         try {
             //noinspection DataFlowIssue
@@ -275,7 +275,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
         // toggle button for changing if the present is anonymous or not (disabled for non-owner players)
         ToggleButton buttonAnonymous = new ToggleButton()
-                .pos(130, 54)
+                .pos(128, 55)
                 .size(13, 12)
                 .value(anonymousSync);
         if (this.hasOwnerPlayer()) {
