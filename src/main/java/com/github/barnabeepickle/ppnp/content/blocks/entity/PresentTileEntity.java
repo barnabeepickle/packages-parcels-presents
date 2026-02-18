@@ -21,6 +21,7 @@ import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.cleanroommc.modularui.widgets.textfield.TextFieldWidget;
 import com.github.barnabeepickle.ppnp.Tags;
 import com.github.barnabeepickle.ppnp.ppnpMod;
+import com.github.barnabeepickle.ppnp.ui.AssetsUI;
 import com.github.barnabeepickle.ppnp.utils.ChristmasUtil;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.Block;
@@ -203,13 +204,6 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
     private final StringSyncValue targetPlayerSync = new StringSyncValue(() -> this.targetPlayer, val -> this.targetPlayer = val);
 
-    UITexture EYE = UITexture.builder()
-            .location(Tags.MODID, "textures/gui/eye.png")
-            .imageSize(12, 24)
-            .iconColorType()
-            .name("eye")
-            .build();
-
     @Override
     @SideOnly(Side.CLIENT)
     public ModularScreen createScreen(PosGuiData guiData, ModularPanel mainPanel) {
@@ -306,8 +300,8 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                 .pos(134, 55)
                 .value(anonymousSync);
         buttonAnonymous.setEnabled(userOwner);
-        buttonAnonymous.overlay(EYE.getSubArea(0.0F, 0.5F, 1.0F, 1.0F));
-        buttonAnonymous.hoverOverlay(EYE.getSubArea(0.0F, 0.0F, 1.0F, 0.5F));
+        buttonAnonymous.overlay(AssetsUI.EYE_ACTIVE);
+        buttonAnonymous.hoverOverlay(AssetsUI.EYE_INACTIVE);
         // the button is pressed we toggle the anonymous boolean and mark the text as dirt so it gets updated
         buttonAnonymous.listenGuiAction((IGuiAction.MousePressed) mouseButton -> {
             if (buttonAnonymous.isBelowMouse()) {
@@ -321,8 +315,11 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         ButtonWidget openPresentButton = new ButtonWidget<>()
                 .size(24)
                 .pos(148,55)
+                .overlay(AssetsUI.PRESENT_CLOSED)
+                .hoverOverlay(AssetsUI.PRESENT_OPEN)
                 .onMousePressed(mouseButton -> {
                     ppnpMod.LOGGER.info("present button pressed");
+                    // open the present here
                     return true;
                 });
         //buttonAnonymous.setEnabled(userTarget);
