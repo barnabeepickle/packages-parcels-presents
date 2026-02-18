@@ -11,6 +11,7 @@ import com.cleanroommc.modularui.screen.ModularScreen;
 import com.cleanroommc.modularui.screen.UISettings;
 import com.cleanroommc.modularui.value.sync.BooleanSyncValue;
 import com.cleanroommc.modularui.value.sync.PanelSyncManager;
+import com.cleanroommc.modularui.value.sync.StringSyncValue;
 import com.cleanroommc.modularui.widgets.RichTextWidget;
 import com.cleanroommc.modularui.widgets.ToggleButton;
 import com.cleanroommc.modularui.widgets.slot.ItemSlot;
@@ -45,7 +46,6 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     private boolean creativePlayerDestroyed;
 
     private boolean anonymous = false;
-    private final BooleanSyncValue anonymousSync = new BooleanSyncValue(() -> !this.anonymous, val -> this.anonymous = !val);
 
     private String targetPlayer = "";
     private String ownerPlayer = "";
@@ -198,6 +198,8 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
     // ModularUI stuff below
 
+    private final BooleanSyncValue anonymousSync = new BooleanSyncValue(() -> !this.anonymous, val -> this.anonymous = !val);
+
     UITexture EYE = UITexture.builder()
             .location(Tags.MODID, "textures/gui/eye.png")
             .imageSize(12, 24)
@@ -245,7 +247,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // owner player display text
         //ppnpMod.LOGGER.info(IKey.lang("container.present.owner", this.getOwnerPlayer()) + " | anyonymous: " + this.isAnonymous());
         RichTextWidget ownerRichText = new RichTextWidget()
-                .size(118, 8)
+                .size(126, 8)
                 .pos(7, 57);
         // this try statement handles not being able to get the UUID this is often
         // because your in an offline instance of the game (like the dev environment)
@@ -265,7 +267,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // toggle button for changing if the present is anonymous or not (disabled for non-owner players)
         ToggleButton buttonAnonymous = new ToggleButton()
                 .size(13, 12)
-                .pos(128, 55)
+                .pos(135, 55)
                 .value(anonymousSync);
         buttonAnonymous.setEnabled(userOwner);
         buttonAnonymous.overlay(EYE.getSubArea(0.0F, 0.5F, 1.0F, 1.0F));
@@ -284,7 +286,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         //ppnpMod.LOGGER.info(IKey.lang("container.present.target", this.getTargetPlayer()));
         RichTextWidget targetRichText = new RichTextWidget()
                 .addLine(IKey.lang("container.present.target", this.getTargetPlayer()))
-                .size(118, 8)
+                .size(126, 8)
                 .pos(7, 70);
         // same as above
         try {
