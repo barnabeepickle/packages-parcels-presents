@@ -106,10 +106,10 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         this.setOwnerPlayer(player.getName());
     }
 
-
     public void setTargetPlayer(GameProfile profile) {
         this.setOwnerPlayer(profile.getName());
     }
+
 
     public void setOwnerPlayer(String name) {
         this.ownerPlayer = name;
@@ -122,6 +122,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     public void setOwnerPlayer(GameProfile profile) {
         this.setOwnerPlayer(profile.getName());
     }
+
 
     public int getSizeInventory() {
         return SLOT_COUNT;
@@ -160,7 +161,6 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         super.readFromNBT(nbt);
 
         this.loadFromNbt(nbt);
-
     }
 
     public NBTTagCompound saveToNbt(NBTTagCompound nbt) {
