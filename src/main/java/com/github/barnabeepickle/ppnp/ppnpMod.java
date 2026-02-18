@@ -21,7 +21,7 @@ public class ppnpMod {
 
     @Mod.EventHandler
     public void preLoadEvent(FMLPreInitializationEvent event) {
-        NetworkHandler.initMessages();
+        //NetworkHandler.initMessages();
 
         MinecraftForge.EVENT_BUS.register(ModBlocks.class);
         MinecraftForge.EVENT_BUS.register(ModTileEntities.class);
