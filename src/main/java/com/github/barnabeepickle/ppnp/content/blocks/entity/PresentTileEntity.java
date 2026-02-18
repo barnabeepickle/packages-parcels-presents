@@ -17,7 +17,6 @@ import com.cleanroommc.modularui.widgets.slot.ItemSlot;
 import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.github.barnabeepickle.ppnp.Tags;
-import com.github.barnabeepickle.ppnp.ppnpMod;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -292,8 +291,6 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // the button is pressed we toggle the anonymous boolean and mark the text as dirt so it gets updated
         buttonAnonymous.listenGuiAction((IGuiAction.MousePressed) mouseButton -> {
             if (buttonAnonymous.isBelowMouse()) {
-                //ppnpMod.LOGGER.info("Anonymous Toggle Button Pressed, action");
-                ppnpMod.LOGGER.info("anon c | {}", this.isAnonymous());
                 ownerRichText.markDirty();
                 return true;
             }
