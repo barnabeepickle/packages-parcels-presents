@@ -321,9 +321,9 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
             richText.addLine(IKey.lang("container.present.owner", this.getOwnerPlayer()));
         } else {
             IKey anonymousText;
-            if (ChristmasUtil.isChristmas()) {
+            if (ChristmasUtil.isChristmas()) { // says "Secret Santa" on christmas
                 anonymousText = IKey.lang("container.present.owner.secret");
-            } else {
+            } else { // and "Anonymous User" the rest of the year
                 anonymousText = IKey.lang("container.present.owner.anonymous");
             }
             richText.addLine(IKey.lang("container.present.owner", anonymousText));
