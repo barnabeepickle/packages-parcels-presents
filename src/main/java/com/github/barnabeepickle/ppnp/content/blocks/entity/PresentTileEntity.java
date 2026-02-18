@@ -299,13 +299,6 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         targetRichText.setEnabled(!userOwner);
         panel.child(targetRichText);
 
-        TextFieldWidget targetTextBox = new TextFieldWidget()
-                .size(118, 13)
-                .pos(7, 67);
-
-        targetTextBox.setEnabled(userOwner);
-        panel.child(targetTextBox);
-
         // add the player inventory
         panel.bindPlayerInventory();
 
