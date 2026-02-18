@@ -200,6 +200,8 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
     private final BooleanSyncValue anonymousSync = new BooleanSyncValue(() -> !this.anonymous, val -> this.anonymous = !val);
 
+    private final StringSyncValue targetPlayerSync = new StringSyncValue(() -> this.targetPlayer, val -> this.targetPlayer = val);
+
     UITexture EYE = UITexture.builder()
             .location(Tags.MODID, "textures/gui/eye.png")
             .imageSize(12, 24)
@@ -300,6 +302,15 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         } catch (NullPointerException ignored) { }
         targetRichText.setEnabled(!userOwner);
         panel.child(targetRichText);
+
+        TextFieldWidget targetTextBox = new TextFieldWidget()
+                .size(126, 13)
+                .pos(7, 67)
+                .setMaxLength(16)
+                .value(targetPlayerSync);
+
+        targetTextBox.setEnabled(userOwner);
+        panel.child(targetTextBox);
 
         // add the player inventory
         panel.bindPlayerInventory();
