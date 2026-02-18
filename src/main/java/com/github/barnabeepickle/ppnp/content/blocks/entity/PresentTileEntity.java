@@ -18,8 +18,10 @@ import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.cleanroommc.modularui.widgets.textfield.TextFieldWidget;
 import com.github.barnabeepickle.ppnp.Tags;
+import com.github.barnabeepickle.ppnp.content.blocks.base.PresentBlock;
 import com.github.barnabeepickle.ppnp.utils.ChristmasUtil;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -214,6 +216,9 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         World world = guiData.getWorld();
         BlockPos blockPos = guiData.getBlockPos();
 
+        boolean userOwner = this.hasOwnerPlayer() && this.isPlayerOwner(guiData.getPlayer());
+        boolean userTarget = !this.hasTargetPlayer() || this.isPlayerTarget(guiData.getPlayer());
+
         SlotGroup presentSlots = new SlotGroup("present_slot_group", 9, true);
         syncManager.registerSlotGroup(presentSlots);
 
@@ -261,14 +266,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                 .size(13, 12)
                 .pos(128, 55)
                 .value(anonymousSync);
-        if (this.hasOwnerPlayer()) {
-            if (this.isPlayerOwner(guiData.getPlayer())) {
-                buttonAnonymous.setEnabled(true);
-                //ppnpMod.LOGGER.info("current user player is owner");
-            } else {
-                buttonAnonymous.disabled();
-            }
-        }
+        buttonAnonymous.setEnabled(userOwner);
         buttonAnonymous.overlay(EYE.getSubArea(0.0F, 0.5F, 1.0F, 1.0F));
         buttonAnonymous.hoverOverlay(EYE.getSubArea(0.0F, 0.0F, 1.0F, 0.5F));
         // the button is pressed we toggle the anonymous boolean and mark the text as dirt so it gets updated
@@ -297,15 +295,15 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                     .getPlayerByUsername(this.getTargetPlayer()).toString()
             );
         } catch (NullPointerException ignored) { }
-        if (this.hasOwnerPlayer()) {
-            if (this.isPlayerOwner(guiData.getPlayer())) {
-                targetRichText.setEnabled(true);
-                //ppnpMod.LOGGER.info("current user player is owner");
-            } else {
-                targetRichText.disabled();
-            }
-        }
+        targetRichText.setEnabled(!userOwner);
         panel.child(targetRichText);
+
+        TextFieldWidget targetTextBox = new TextFieldWidget()
+                .size(118, 13)
+                .pos(7, 67);
+
+        targetTextBox.setEnabled(userOwner);
+        panel.child(targetTextBox);
 
         // add the player inventory
         panel.bindPlayerInventory();
