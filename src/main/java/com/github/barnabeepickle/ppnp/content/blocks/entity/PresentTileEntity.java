@@ -270,24 +270,6 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         ownerRichText.textBuilder(this::switchText);
         panel.child(ownerRichText);
 
-        // toggle button for changing if the present is anonymous or not (disabled for non-owner players)
-        ToggleButton buttonAnonymous = new ToggleButton()
-                .size(13, 12)
-                .pos(135, 55)
-                .value(anonymousSync);
-        buttonAnonymous.setEnabled(userOwner);
-        buttonAnonymous.overlay(EYE.getSubArea(0.0F, 0.5F, 1.0F, 1.0F));
-        buttonAnonymous.hoverOverlay(EYE.getSubArea(0.0F, 0.0F, 1.0F, 0.5F));
-        // the button is pressed we toggle the anonymous boolean and mark the text as dirt so it gets updated
-        buttonAnonymous.listenGuiAction((IGuiAction.MousePressed) mouseButton -> {
-            if (buttonAnonymous.isBelowMouse()) {
-                ownerRichText.markDirty();
-                return true;
-            }
-            return false;
-        });
-        panel.child(buttonAnonymous);
-
         // target player display text
         //ppnpMod.LOGGER.info(IKey.lang("container.present.target", this.getTargetPlayer()));
         RichTextWidget targetRichText = new RichTextWidget()
@@ -307,6 +289,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         targetRichText.setEnabled(!userOwner);
         panel.child(targetRichText);
 
+        // target player text box (the owner sets the target here)
         TextFieldWidget targetTextBox = new TextFieldWidget()
                 .size(126, 13)
                 .pos(7, 67)
@@ -315,6 +298,24 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
         targetTextBox.setEnabled(userOwner);
         panel.child(targetTextBox);
+
+        // toggle button for changing if the present is anonymous or not (disabled for non-owner players)
+        ToggleButton buttonAnonymous = new ToggleButton()
+                .size(13, 12)
+                .pos(135, 55)
+                .value(anonymousSync);
+        buttonAnonymous.setEnabled(userOwner);
+        buttonAnonymous.overlay(EYE.getSubArea(0.0F, 0.5F, 1.0F, 1.0F));
+        buttonAnonymous.hoverOverlay(EYE.getSubArea(0.0F, 0.0F, 1.0F, 0.5F));
+        // the button is pressed we toggle the anonymous boolean and mark the text as dirt so it gets updated
+        buttonAnonymous.listenGuiAction((IGuiAction.MousePressed) mouseButton -> {
+            if (buttonAnonymous.isBelowMouse()) {
+                ownerRichText.markDirty();
+                return true;
+            }
+            return false;
+        });
+        panel.child(buttonAnonymous);
 
         // add the player inventory
         panel.bindPlayerInventory();
