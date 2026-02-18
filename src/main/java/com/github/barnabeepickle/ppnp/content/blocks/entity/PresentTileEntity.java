@@ -244,7 +244,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                     new ModularSlot(this.itemHandler, i)
                             .slotGroup(presentSlotGroup)
             ).pos((x * 18) + 7, (y * 18) + 16);
-            if (!userOwner && !userTarget) {
+            if (!userOwner) {
                 currentSlot.getSlot().accessibility(false, false);
             }
             panel.child(currentSlot);
