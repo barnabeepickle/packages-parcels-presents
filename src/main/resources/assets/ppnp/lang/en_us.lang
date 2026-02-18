@@ -6,6 +6,8 @@ container.present=Present
 container.present.owner=Giver: %s
 container.present.target=Receiver: %s
 
+container.present.open.tooltip=Press to open the present.
+
 container.present.owner.anonymous=Anonymous User
 container.present.owner.secret=Secret Santa
 
