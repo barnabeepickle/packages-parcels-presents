@@ -3,14 +3,13 @@ package com.github.barnabeepickle.ppnp.content.blocks.entity;
 import com.cleanroommc.modularui.api.IGuiHolder;
 import com.cleanroommc.modularui.api.drawable.IKey;
 import com.cleanroommc.modularui.api.widget.IGuiAction;
-import com.cleanroommc.modularui.drawable.GuiTextures;
 import com.cleanroommc.modularui.drawable.UITexture;
 import com.cleanroommc.modularui.drawable.text.RichText;
 import com.cleanroommc.modularui.factory.PosGuiData;
 import com.cleanroommc.modularui.screen.ModularPanel;
 import com.cleanroommc.modularui.screen.ModularScreen;
 import com.cleanroommc.modularui.screen.UISettings;
-import com.cleanroommc.modularui.value.BoolValue;
+import com.cleanroommc.modularui.value.sync.BooleanSyncValue;
 import com.cleanroommc.modularui.value.sync.PanelSyncManager;
 import com.cleanroommc.modularui.widgets.RichTextWidget;
 import com.cleanroommc.modularui.widgets.ToggleButton;
@@ -18,18 +17,14 @@ import com.cleanroommc.modularui.widgets.slot.ItemSlot;
 import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.github.barnabeepickle.ppnp.Tags;
-import com.github.barnabeepickle.ppnp.networking.NetworkHandler;
-import com.github.barnabeepickle.ppnp.networking.messages.PresentMessage;
 import com.github.barnabeepickle.ppnp.ppnpMod;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -38,9 +33,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiData> {
     private static final int SLOT_COUNT = 18;
@@ -48,7 +41,9 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
     private boolean creativePlayerDestroyed;
 
-    private final BoolValue anonymous = new BoolValue(false);
+    private boolean anonymous = false;
+    private final BooleanSyncValue anonymousSync = new BooleanSyncValue(() -> !this.anonymous, val -> this.anonymous = !val);
+
     private String targetPlayer = "";
     private String ownerPlayer = "";
 
@@ -57,19 +52,19 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     }
 
     public void toggleAnonymous() {
-        this.anonymous.setValue(!this.anonymous.getBoolValue());
+        this.anonymous = !this.isAnonymous();
     }
 
     public void makeAnonymous() {
-        this.anonymous.setValue(true);
+        this.anonymous = true;
     }
 
     public void makeNotAnonymous() {
-        this.anonymous.setValue(false);
+        this.anonymous = false;
     }
 
     public boolean isAnonymous() {
-        return this.anonymous.getBoolValue();
+        return this.anonymous;
     }
 
 
@@ -173,7 +168,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         nbt.setTag("present_inv", this.itemHandler.serializeNBT());
         nbt.setString("target_player", this.targetPlayer);
         nbt.setString("owner_player", this.ownerPlayer);
-        nbt.setBoolean("anonymous", this.anonymous.getBoolValue());
+        nbt.setBoolean("anonymous", this.isAnonymous());
 
         return nbt;
     }
@@ -182,7 +177,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         this.itemHandler.deserializeNBT(nbt.getCompoundTag("present_inv"));
         this.targetPlayer = nbt.getString("target_player");
         this.ownerPlayer = nbt.getString("owner_player");
-        this.anonymous.setBoolValue(nbt.getBoolean("anonymous"));
+        this.anonymous = nbt.getBoolean("anonymous");
     }
 
     @Override
@@ -282,7 +277,8 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // toggle button for changing if the present is anonymous or not (disabled for non-owner players)
         ToggleButton buttonAnonymous = new ToggleButton()
                 .pos(130, 54)
-                .size(13, 12);
+                .size(13, 12)
+                .value(anonymousSync);
         if (this.hasOwnerPlayer()) {
             if (this.isPlayerOwner(guiData.getPlayer())) {
                 buttonAnonymous.setEnabled(true);
@@ -297,17 +293,12 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         buttonAnonymous.listenGuiAction((IGuiAction.MousePressed) mouseButton -> {
             if (buttonAnonymous.isBelowMouse()) {
                 //ppnpMod.LOGGER.info("Anonymous Toggle Button Pressed, action");
-                toggleAnonymous();
-                if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-                    NetworkHandler.INSTANCE.sendToServer(new PresentMessage(blockPos, anonymous.getBoolValue()));
-                }
                 ppnpMod.LOGGER.info("anon c | {}", this.isAnonymous());
                 ownerRichText.markDirty();
                 return true;
             }
             return false;
         });
-        buttonAnonymous.invertSelected(this.isAnonymous());
         panel.child(buttonAnonymous);
 
         // add the player inventory
@@ -315,10 +306,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
         // listeners for various actions`
         // client & server listeners
-        syncManager.addOpenListener(entityPlayer -> {
-            ppnpMod.LOGGER.info("trying to invert button");
-            // TODO: restore toggle button state here
-        });
+
         // server only listeners
         if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
             syncManager.addCloseListener(entityPlayer -> {
