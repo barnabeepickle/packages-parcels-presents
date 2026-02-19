@@ -370,7 +370,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                 .pos(148,55)
                 .overlay(AssetsUI.PRESENT_CLOSED)
                 .hoverOverlay(AssetsUI.PRESENT_OPEN)
-                .tooltip(text -> text.addLine(IKey.lang("container.present.open.tooltip")))
+                .tooltipBuilder(text -> text.addLine(IKey.lang("container.present.open.tooltip")))
                 .onMousePressed(mouseButton -> {
                     this.openPresentNetwork(world, blockPos, user, panel);
                     return true;
