@@ -44,7 +44,6 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiData> {
     private static final int SLOT_COUNT = 18;
