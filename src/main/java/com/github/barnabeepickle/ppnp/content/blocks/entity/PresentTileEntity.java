@@ -22,7 +22,6 @@ import com.github.barnabeepickle.ppnp.Tags;
 import com.github.barnabeepickle.ppnp.content.blocks.base.PresentBlock;
 import com.github.barnabeepickle.ppnp.networking.NetworkHandler;
 import com.github.barnabeepickle.ppnp.networking.messages.PresentOpenMessage;
-import com.github.barnabeepickle.ppnp.ppnpMod;
 import com.github.barnabeepickle.ppnp.ui.AssetsUI;
 import com.github.barnabeepickle.ppnp.utils.ChristmasUtil;
 import com.mojang.authlib.GameProfile;

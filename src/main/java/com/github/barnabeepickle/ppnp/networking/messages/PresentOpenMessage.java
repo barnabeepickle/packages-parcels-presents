@@ -2,7 +2,6 @@ package com.github.barnabeepickle.ppnp.networking.messages;
 
 
 import com.github.barnabeepickle.ppnp.content.blocks.entity.PresentTileEntity;
-import com.github.barnabeepickle.ppnp.ppnpMod;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
