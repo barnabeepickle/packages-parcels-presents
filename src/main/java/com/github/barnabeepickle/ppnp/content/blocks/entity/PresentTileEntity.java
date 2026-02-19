@@ -376,7 +376,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                     return true;
                 })
         );
-        panel.getChildren().get(panel.getChildren().size() - 1).setEnabled(userTarget);
+        panel.getChildren().get(panel.getChildren().size() - 1).setEnabled(!userOwner && userTarget);
 
         // add the player inventory
         panel.bindPlayerInventory();
