@@ -16,4 +16,6 @@ feedback.present.no_owner=§cThis present has no gift giver, it might not be wor
 feedback.present.you_target=§aThis is your present.
 feedback.present.no_target=§9This present has no gift receiver so can be claimed by anyone.
 
+item.cardboard.name=Cardboard
+
 tile.red_present.name=§cRed§r Present
