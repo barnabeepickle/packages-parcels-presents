@@ -19,6 +19,7 @@ import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import com.cleanroommc.modularui.widgets.textfield.TextFieldWidget;
 import com.github.barnabeepickle.ppnp.Tags;
+import com.github.barnabeepickle.ppnp.content.blocks.base.PresentBlock;
 import com.github.barnabeepickle.ppnp.networking.NetworkHandler;
 import com.github.barnabeepickle.ppnp.networking.messages.PresentOpenMessage;
 import com.github.barnabeepickle.ppnp.ppnpMod;
@@ -58,6 +59,8 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
     @Nullable
     private EntityPlayer userPlayer = null;
+
+    private boolean beingOpened = false;
 
     public PresentTileEntity() {
 
@@ -165,7 +168,10 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     }
 
     public boolean shouldDrop() {
-        return !this.didCreativePlayerDestroyed() || !this.isEmpty();
+        if (this.beingOpened) {
+            return false;
+        }
+        return !this.didCreativePlayerDestroyed() && !this.isEmpty();
     }
 
     @Override
@@ -219,13 +225,17 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
     public void openPresent(World world, BlockPos blockPos, EntityPlayer target) {
         if (world.isBlockLoaded(blockPos)) {
+            this.beingOpened = true;
             for (int i = 0; i < SLOT_COUNT; i++) {
                 target.addItemStackToInventory(this.itemHandler.getStackInSlot(i));
                 this.itemHandler.extractItem(i, this.itemHandler.getStackInSlot(i).getCount(), false);
             }
+            IBlockState blockstate = world.getBlockState(blockPos);
+            if (blockstate.getBlock() instanceof PresentBlock block) {
+                block.breakBlock(world, blockPos, blockstate);
+            }
+            world.destroyBlock(blockPos, false);
             if (FMLCommonHandler.instance().getSide().isServer()) {
-                IBlockState blockstate = world.getBlockState(blockPos);
-                blockstate.getBlock().breakBlock(world, blockPos, blockstate);
                 world.notifyBlockUpdate(blockPos, blockstate, world.getBlockState(blockPos), 2);
             }
             ppnpMod.LOGGER.info("trying to delete tile entity");

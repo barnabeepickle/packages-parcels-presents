@@ -146,6 +146,8 @@ public abstract class PresentBlock extends ModBlock implements ITileEntityProvid
             }
 
             world.updateComparatorOutputLevel(blockPos, blockstate.getBlock());
+
+            world.removeTileEntity(blockPos);
         }
 
         super.breakBlock(world, blockPos, blockstate);
