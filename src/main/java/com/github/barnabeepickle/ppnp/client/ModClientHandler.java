@@ -1,5 +1,6 @@
 package com.github.barnabeepickle.ppnp.client;
 
+import com.github.barnabeepickle.ppnp.events.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -24,7 +25,7 @@ public class ModClientHandler {
 
     public static void registerItemModels() {
         // register item models here
-
+        registerItem(ModItems.CARDBOARD);
     }
 
     // Item model registration utilities
