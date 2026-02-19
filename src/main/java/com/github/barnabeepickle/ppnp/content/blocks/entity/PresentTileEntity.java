@@ -44,6 +44,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiData> {
     private static final int SLOT_COUNT = 18;
@@ -373,8 +374,9 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                 .onMousePressed(mouseButton -> {
                     this.openPresentNetwork(world, blockPos, user, panel);
                     return true;
-                }).setEnabledIf(bool -> (!userTarget))
+                })
         );
+        panel.getChildren().get(panel.getChildren().size() - 1).setEnabled(userTarget);
 
         // add the player inventory
         panel.bindPlayerInventory();
