@@ -336,7 +336,6 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                 .pos(7, 67)
                 .setMaxLength(16)
                 .value(targetPlayerSync);
-
         targetTextBox.setEnabled(userOwner);
         panel.child(targetTextBox);
 
