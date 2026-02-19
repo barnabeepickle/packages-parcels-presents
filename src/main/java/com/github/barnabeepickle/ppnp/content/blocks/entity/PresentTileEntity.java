@@ -368,7 +368,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
                     this.openPresentNetwork(world, blockPos, user, panel);
                     return true;
                 });
-        //buttonAnonymous.setEnabled(userTarget);
+        buttonAnonymous.setEnabled(userTarget);
         panel.child(openPresentButton);
 
         // add the player inventory
