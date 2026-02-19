@@ -14,9 +14,11 @@ import org.apache.logging.log4j.Logger;
 @Mod(modid = Tags.MODID, name = Tags.MOD_NAME, version = Tags.VERSION)
 @Mod.EventBusSubscriber
 public class ppnpMod {
+    @SuppressWarnings("unused")
     @Mod.Instance(Tags.MODID)
     public static ppnpMod INSTANCE;
 
+    @SuppressWarnings("unused")
     public static final Logger LOGGER = LogManager.getLogger(Tags.MOD_NAME);
 
     @Mod.EventHandler
