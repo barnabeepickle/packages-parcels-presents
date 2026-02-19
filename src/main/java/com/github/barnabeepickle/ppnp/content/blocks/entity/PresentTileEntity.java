@@ -377,6 +377,8 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // listeners for various actions`
         // client & server listeners
 
+        // client only
+
         // server only listeners
         syncManager.addOpenListener(entityPlayer -> {
             userPlayer = user;
