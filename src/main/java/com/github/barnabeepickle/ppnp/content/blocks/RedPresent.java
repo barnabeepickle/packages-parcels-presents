@@ -14,6 +14,7 @@ public class RedPresent extends PresentBlock {
     @Nonnull
     private static final String name = "red_present";
 
+    @Override
     public String getName() {
         return name;
     }
