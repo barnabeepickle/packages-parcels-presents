@@ -72,14 +72,17 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     }
 
 
+    @SuppressWarnings("unused")
     public void toggleAnonymous() {
         this.anonymous = !this.isAnonymous();
     }
 
+    @SuppressWarnings("unused")
     public void makeAnonymous() {
         this.anonymous = true;
     }
 
+    @SuppressWarnings("unused")
     public void makeNotAnonymous() {
         this.anonymous = false;
     }
@@ -120,14 +123,17 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     }
 
 
+    @SuppressWarnings("unused")
     public void setTargetPlayer(String name) {
         this.targetPlayer = name;
     }
 
+    @SuppressWarnings("unused")
     public void setTargetPlayer(EntityPlayer player) {
         this.setOwnerPlayer(player.getName());
     }
 
+    @SuppressWarnings("unused")
     public void setTargetPlayer(GameProfile profile) {
         this.setOwnerPlayer(profile.getName());
     }
@@ -137,6 +143,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         this.ownerPlayer = name;
     }
 
+    @SuppressWarnings("unused")
     public void setOwnerPlayer(EntityPlayer player) {
         this.setOwnerPlayer(player.getName());
     }
@@ -146,6 +153,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
     }
 
 
+    @SuppressWarnings("unused")
     public int getSizeInventory() {
         return SLOT_COUNT;
     }
@@ -163,6 +171,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         return this.creativePlayerDestroyed;
     }
 
+    @SuppressWarnings("unused")
     public void setCreativePlayerDestroyed(boolean destroy) {
         this.creativePlayerDestroyed = destroy;
     }
@@ -380,20 +389,12 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // client only
 
         // server only listeners
-        syncManager.addOpenListener(entityPlayer -> {
-            userPlayer = user;
-        });
-        syncManager.addCloseListener(entityPlayer -> {
-            userPlayer = null;
-        });
+        syncManager.addOpenListener(entityPlayer -> userPlayer = user);
+        syncManager.addCloseListener(entityPlayer -> userPlayer = null);
         if (FMLCommonHandler.instance().getSide().isServer()) {
             IBlockState blockstate = world.getBlockState(blockPos);
-            syncManager.addOpenListener(entityPlayer -> {
-                world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2);
-            });
-            syncManager.addCloseListener(entityPlayer -> {
-                world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2);
-            });
+            syncManager.addOpenListener(entityPlayer -> world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2));
+            syncManager.addCloseListener(entityPlayer -> world.notifyBlockUpdate(blockPos, blockstate, blockstate, 2));
         }
 
         return panel;

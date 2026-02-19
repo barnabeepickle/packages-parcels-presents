@@ -2,6 +2,7 @@ package com.github.barnabeepickle.ppnp.utils;
 
 import net.minecraft.util.math.MathHelper;
 
+@SuppressWarnings("unused")
 public class ColorUtil {
     private static final int ALPHA = 255 << 24;
 

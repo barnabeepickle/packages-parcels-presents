@@ -3,6 +3,7 @@ package com.github.barnabeepickle.ppnp.ui;
 import com.cleanroommc.modularui.drawable.UITexture;
 import com.github.barnabeepickle.ppnp.Tags;
 
+@SuppressWarnings("unused")
 public class AssetsUI {
     public static UITexture EYE_ACTIVE = UITexture.builder()
             .location(Tags.MODID, "textures/gui/eye.png")

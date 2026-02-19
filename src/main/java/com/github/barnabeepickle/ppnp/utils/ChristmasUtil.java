@@ -2,6 +2,7 @@ package com.github.barnabeepickle.ppnp.utils;
 
 import java.util.Calendar;
 
+@SuppressWarnings("unused")
 public class ChristmasUtil {
     public static boolean isChristmas() {
         Calendar calendar = Calendar.getInstance();
