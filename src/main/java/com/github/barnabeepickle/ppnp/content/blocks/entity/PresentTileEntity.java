@@ -73,19 +73,19 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
 
     public void toggleAnonymous() {
-        this.anonymous = !this.isAnonymous();
+        this.anonymousSync.setValue(!this.isAnonymous());
     }
 
     public void makeAnonymous() {
-        this.anonymous = true;
+        this.anonymousSync.setValue(true);
     }
 
     public void makeNotAnonymous() {
-        this.anonymous = false;
+        this.anonymousSync.setValue(false);
     }
 
     public boolean isAnonymous() {
-        return this.anonymous;
+        return this.anonymousSync.getBoolValue();
     }
 
 
