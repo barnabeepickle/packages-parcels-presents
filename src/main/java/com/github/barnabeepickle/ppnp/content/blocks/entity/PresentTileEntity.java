@@ -52,7 +52,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
     private boolean creativePlayerDestroyed;
 
-    private boolean anonymous = false;
+    private boolean anonymous = true;
 
     private String targetPlayer = "";
     private String ownerPlayer = "";
