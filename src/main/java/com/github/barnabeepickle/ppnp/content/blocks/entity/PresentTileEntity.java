@@ -238,7 +238,6 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
             if (FMLCommonHandler.instance().getSide().isServer()) {
                 world.notifyBlockUpdate(blockPos, blockstate, world.getBlockState(blockPos), 2);
             }
-            ppnpMod.LOGGER.info("trying to delete tile entity");
             target.playSound(new SoundEvent(new ResourceLocation("block.end_gateway.spawn")), 0.5F, 0.75F);
         }
     }

@@ -42,16 +42,11 @@ public class PresentOpenMessage implements IMessage {
             EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
             WorldServer serverWorld = serverPlayer.getServerWorld();
             BlockPos presentBlockPos = message.blockPos;
-            ppnpMod.LOGGER.info("stage 0");
             if (serverWorld.getTileEntity(presentBlockPos) instanceof PresentTileEntity tile) {
-                ppnpMod.LOGGER.info("stage 1 | {}", tile.getUserPlayer() == null);
                 if (tile.getUserPlayer() != null) {
-                    ppnpMod.LOGGER.info("stage 2");
                     if (tile.getUserPlayer().getGameProfile() == serverPlayer.getGameProfile()) {
-                        ppnpMod.LOGGER.info("stage 3");
                         // Execute the action on the main server thread by adding it as a scheduled task
                         serverWorld.addScheduledTask(() -> {
-                            ppnpMod.LOGGER.info("stage 4");
                             tile.openPresent(serverWorld, presentBlockPos, serverPlayer);
                         });
                     }
