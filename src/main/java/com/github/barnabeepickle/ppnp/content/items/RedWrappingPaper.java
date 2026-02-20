@@ -1,21 +1,22 @@
 package com.github.barnabeepickle.ppnp.content.items;
 
 import com.github.barnabeepickle.ppnp.content.ModCreativeTabs;
-import com.github.barnabeepickle.ppnp.content.items.base.ModItem;
+import com.github.barnabeepickle.ppnp.content.items.base.WrappingPaperItem;
 
 import javax.annotation.Nonnull;
 
-public class RedWrappingPaper extends ModItem {
+public class RedWrappingPaper extends WrappingPaperItem {
     public RedWrappingPaper() {
         this.setTranslationKey(name);
         this.setCreativeTab(ModCreativeTabs.primaryCreativeTab);
     }
 
     @Nonnull
-    private static final String name = "red_wrapping_paper";
+    private final String name = "red_" + super.getName();
 
+    @Nonnull
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 }
