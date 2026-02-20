@@ -20,5 +20,5 @@ item.cardboard.name=Cardboard
 item.cardboard_box.name=Cardboard Box
 item.red_wrapping_paper.name=Red Wrapping Paper
 
-tile.red_present.name=§cRed§r Present
-tile.purple_present.name=§5Purple§r Present
+tile.red_present.name=§c§lRed§r Present
+tile.purple_present.name=§5§lPurple§r Present
