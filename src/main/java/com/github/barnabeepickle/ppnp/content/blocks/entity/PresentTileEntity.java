@@ -4,8 +4,6 @@ import com.cleanroommc.modularui.api.IGuiHolder;
 import com.cleanroommc.modularui.api.drawable.IKey;
 import com.cleanroommc.modularui.api.widget.IGuiAction;
 import com.cleanroommc.modularui.drawable.text.RichText;
-import com.cleanroommc.modularui.drawable.text.StringKey;
-import com.cleanroommc.modularui.drawable.text.StyledText;
 import com.cleanroommc.modularui.factory.PosGuiData;
 import com.cleanroommc.modularui.screen.ModularPanel;
 import com.cleanroommc.modularui.screen.ModularScreen;
@@ -47,7 +45,6 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiData> {
     private static final int SLOT_COUNT = 18;
