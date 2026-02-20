@@ -33,6 +33,7 @@ public abstract class PresentBlock extends ModBlock implements ITileEntityProvid
         super(Material.WOOD, mapColor);
         this.setHardness(1.0F);
         this.setCreativeTab(creativeTab);
+        this.setHarvestLevel("axe", 0);
     }
 
     public static final int USER_TARGET = 0;
