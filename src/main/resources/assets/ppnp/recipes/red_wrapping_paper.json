@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "#REDDYE"
+    },
+    {
+      "item": "#PAPER"
+    },
+    {
+      "item": "#PAPER"
+    },
+    {
+      "item": "#PAPER"
+    }
+  ],
+  "result": {
+    "item": "ppnp:red_wrapping_paper"
+  }
+}

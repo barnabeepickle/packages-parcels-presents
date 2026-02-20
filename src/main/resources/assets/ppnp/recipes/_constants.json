@@ -1,0 +1,23 @@
+[
+  {
+    "name": "REDDYE",
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "dyeRed"
+    }
+  },
+  {
+    "name": "PAPER",
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "paper"
+    }
+  },
+  {
+    "name": "SLIMEBALL",
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "slimeball"
+    }
+  }
+]

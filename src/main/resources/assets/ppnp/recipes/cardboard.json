@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "ppnp:cardboard"
+  },
+  "pattern": [
+    "PPP",
+    " S ",
+    "PPP"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "P": {
+      "item": "#PAPER"
+    },
+    "S": {
+      "item": "#SLIMEBALL"
+    }
+  }
+}
