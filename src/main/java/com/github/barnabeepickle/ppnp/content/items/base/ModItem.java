@@ -1,4 +1,4 @@
-package com.github.barnabeepickle.ppnp.content.items;
+package com.github.barnabeepickle.ppnp.content.items.base;
 
 import net.minecraft.item.Item;
 

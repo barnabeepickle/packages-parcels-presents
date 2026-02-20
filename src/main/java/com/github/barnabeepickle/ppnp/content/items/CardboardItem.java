@@ -1,6 +1,7 @@
 package com.github.barnabeepickle.ppnp.content.items;
 
 import com.github.barnabeepickle.ppnp.content.ModCreativeTabs;
+import com.github.barnabeepickle.ppnp.content.items.base.ModItem;
 
 import javax.annotation.Nonnull;
 
