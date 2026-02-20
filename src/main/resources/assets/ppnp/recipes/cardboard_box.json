@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "ppnp:cardboard"
+    },
+    {
+      "item": "ppnp:cardboard"
+    },
+    {
+      "item": "ppnp:cardboard"
+    },
+    {
+      "item": "ppnp:cardboard"
+    }
+  ],
+  "result": {
+    "item": "ppnp:cardboard_box"
+  }
+}
