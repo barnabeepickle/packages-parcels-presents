@@ -18,7 +18,7 @@ feedback.present.no_target=§9This present has no gift receiver so can be claime
 
 item.cardboard.name=Cardboard
 item.cardboard_box.name=Cardboard Box
-item.red_wrapping_paper.name=Red Wrapping Paper
+item.red_wrapping_paper.name=§c§lRed§r Wrapping Paper
 
 tile.red_present.name=§c§lRed§r Present
 tile.purple_present.name=§5§lPurple§r Present
