@@ -46,6 +46,7 @@ public class ModClientHandler {
     public static void registerBlockItemModels() {
         // register block item models here
         registerBlockItem(RED_PRESENT);
+        registerBlockItem(ORANGE_PRESENT);
         registerBlockItem(PURPLE_PRESENT);
         registerBlockItem(BLUE_PRESENT);
     }

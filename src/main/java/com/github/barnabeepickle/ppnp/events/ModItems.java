@@ -19,6 +19,7 @@ public class ModItems {
     public static WrappingPaperItem RED_WRAPPING_PAPER = new WrappingPaperItem("red");
 
     public static ItemBlock ITEM_RED_PRESENT = new ModBlockItem(RED_PRESENT);
+    public static ItemBlock ITEM_ORANGE_PRESENT = new ModBlockItem(ORANGE_PRESENT);
     public static ItemBlock ITEM_BLUE_PRESENT = new ModBlockItem(BLUE_PRESENT);
     public static ItemBlock ITEM_PURPLE_PRESENT = new ModBlockItem(PURPLE_PRESENT);
 
@@ -33,6 +34,7 @@ public class ModItems {
 
         // Register block items here
         registerEntry(itemEvent, ITEM_RED_PRESENT, RED_PRESENT.getName());
+        registerEntry(itemEvent, ITEM_ORANGE_PRESENT, ORANGE_PRESENT.getName());
         registerEntry(itemEvent, ITEM_BLUE_PRESENT, BLUE_PRESENT.getName());
         registerEntry(itemEvent, ITEM_PURPLE_PRESENT, PURPLE_PRESENT.getName());
     }
