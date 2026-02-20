@@ -17,5 +17,6 @@ feedback.present.you_target=§aThis is your present.
 feedback.present.no_target=§9This present has no gift receiver so can be claimed by anyone.
 
 item.cardboard.name=Cardboard
+item.red_wrapping_paper.name=Red Wrapping Paper
 
 tile.red_present.name=§cRed§r Present
