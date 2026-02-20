@@ -4,6 +4,8 @@ import com.cleanroommc.modularui.api.IGuiHolder;
 import com.cleanroommc.modularui.api.drawable.IKey;
 import com.cleanroommc.modularui.api.widget.IGuiAction;
 import com.cleanroommc.modularui.drawable.text.RichText;
+import com.cleanroommc.modularui.drawable.text.StringKey;
+import com.cleanroommc.modularui.drawable.text.StyledText;
 import com.cleanroommc.modularui.factory.PosGuiData;
 import com.cleanroommc.modularui.screen.ModularPanel;
 import com.cleanroommc.modularui.screen.ModularScreen;
@@ -24,6 +26,7 @@ import com.github.barnabeepickle.ppnp.networking.NetworkHandler;
 import com.github.barnabeepickle.ppnp.networking.messages.PresentOpenMessage;
 import com.github.barnabeepickle.ppnp.ui.AssetsUI;
 import com.github.barnabeepickle.ppnp.utils.ChristmasUtil;
+import com.github.barnabeepickle.ppnp.utils.ColorUtil;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -307,13 +310,16 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         // this try statement handles not being able to get the UUID this is often
         // because your in an offline instance of the game (like the dev environment)
         try {
-            //noinspection DataFlowIssue
-            ownerRichText.addTooltipLine(FMLCommonHandler
-                    .instance()
-                    .getMinecraftServerInstance()
-                    .getPlayerList()
-                    .getPlayerByUsername(this.getOwnerPlayer()).toString()
-            );
+            ownerRichText.tooltipBuilder(tooltip -> {
+                //noinspection DataFlowIssue
+                tooltip.addLine(FMLCommonHandler
+                        .instance()
+                        .getMinecraftServerInstance()
+                        .getPlayerList()
+                        .getPlayerByUsername(this.getOwnerPlayer()).getUniqueID().toString()
+                );
+                tooltip.textColor(ColorUtil.getColor(85, 255, 85));
+            });
         } catch (NullPointerException ignored) { }
         // adds the text dependent on if this is an anonymous gift
         ownerRichText.textBuilder(this::switchText);
