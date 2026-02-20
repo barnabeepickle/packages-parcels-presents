@@ -14,7 +14,7 @@ container.present.owner.secret=Secret Santa
 feedback.present.you_owner=§aYou are now this present's gifter.
 feedback.present.no_owner=§cThis present has no gift giver, it might not be working.
 feedback.present.you_target=§aThis is your present.
-feedback.present.no_target=§9This present has no gift receiver so can be claimed by anyone.
+feedback.present.no_target=§9This present has no gift receiver so it can be claimed by anyone.
 
 item.cardboard.name=Cardboard
 item.cardboard_box.name=Cardboard Box
