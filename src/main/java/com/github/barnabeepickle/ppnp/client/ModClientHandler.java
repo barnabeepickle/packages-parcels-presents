@@ -26,6 +26,7 @@ public class ModClientHandler {
     public static void registerItemModels() {
         // register item models here
         registerItem(ModItems.CARDBOARD);
+        registerItem();
     }
 
     // Item model registration utilities
