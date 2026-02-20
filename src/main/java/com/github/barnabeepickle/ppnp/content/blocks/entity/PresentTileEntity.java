@@ -280,7 +280,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
 
         // add the name to the top of the UI
         RichTextWidget containerTitle = new RichTextWidget()
-                .size(70, 8)
+                .size(162, 8)
                 .pos(7, 6)
                 .addLine(block.getLocalizedName());
         panel.child(containerTitle);
