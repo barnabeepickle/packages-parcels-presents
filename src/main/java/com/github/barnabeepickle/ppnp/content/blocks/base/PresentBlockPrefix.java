@@ -14,6 +14,7 @@ public class PresentBlockPrefix extends PresentBlock {
     public PresentBlockPrefix(String prefix, MapColor mapColor, CreativeTabs creativeTab) {
         super(mapColor, creativeTab);
         this.name = prefix + "_present";
+        this.setTranslationKey(this.name);
     }
 
     @Nonnull
