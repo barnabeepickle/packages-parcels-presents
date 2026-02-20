@@ -13,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityShulkerBox;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -152,6 +153,13 @@ public abstract class PresentBlock extends ModBlock implements ITileEntityProvid
         }
 
         super.breakBlock(world, blockPos, blockstate);
+    }
+
+    @Override
+    public void onBlockHarvested(World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState blockstate, @Nonnull EntityPlayer player) {
+        if (worldIn.getTileEntity(pos) instanceof PresentTileEntity presentTileEntity) {
+            presentTileEntity.setCreativePlayerDestroyed(player.capabilities.isCreativeMode);
+        }
     }
 
     @Override
