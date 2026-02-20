@@ -14,7 +14,7 @@ public class WrappingPaperItem extends ModItem {
     public WrappingPaperItem(String prefix, CreativeTabs creativeTab) {
         this.name = prefix + "_wrapping_paper";
         this.setCreativeTab(creativeTab);
-        this.setTranslationKey(name);
+        this.setTranslationKey(this.name);
     }
 
     @Nonnull
