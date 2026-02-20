@@ -12,8 +12,8 @@ import static com.github.barnabeepickle.ppnp.utils.RegisteryUtil.registerEntry;
 
 public class ModBlocks {
     public static PresentBlock RED_PRESENT = new PresentBlockPrefix("red", MapColor.RED);
-    public static PresentBlock PURPLE_PRESENT = new PresentBlockPrefix("purple", MapColor.PURPLE);
     public static PresentBlock BLUE_PRESENT = new PresentBlockPrefix("blue", MapColor.BLUE);
+    public static PresentBlock PURPLE_PRESENT = new PresentBlockPrefix("purple", MapColor.PURPLE);
 
     @SubscribeEvent
     public static void registerBlocksEvent(RegistryEvent.Register<Block> event) {
@@ -21,8 +21,8 @@ public class ModBlocks {
 
         // Register blocks here
         registerEntry(blockEvent, RED_PRESENT, RED_PRESENT.getName());
-        registerEntry(blockEvent, PURPLE_PRESENT, PURPLE_PRESENT.getName());
         registerEntry(blockEvent, BLUE_PRESENT, BLUE_PRESENT.getName());
+        registerEntry(blockEvent, PURPLE_PRESENT, PURPLE_PRESENT.getName());
 
     }
 }
