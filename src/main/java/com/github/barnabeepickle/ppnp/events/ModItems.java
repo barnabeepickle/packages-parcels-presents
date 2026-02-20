@@ -10,8 +10,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
-import static com.github.barnabeepickle.ppnp.events.ModBlocks.PURPLE_PRESENT;
-import static com.github.barnabeepickle.ppnp.events.ModBlocks.RED_PRESENT;
+import static com.github.barnabeepickle.ppnp.events.ModBlocks.*;
 import static com.github.barnabeepickle.ppnp.utils.RegisteryUtil.registerEntry;
 
 public class ModItems {
@@ -21,6 +20,7 @@ public class ModItems {
 
     public static ItemBlock ITEM_RED_PRESENT = new ModBlockItem(RED_PRESENT);
     public static ItemBlock ITEM_PURPLE_PRESENT = new ModBlockItem(PURPLE_PRESENT);
+    public static ItemBlock ITEM_BLUE_PRESENT = new ModBlockItem(BLUE_PRESENT);
 
     @SubscribeEvent
     public static void registerItemsEvent(RegistryEvent.Register<Item> event) {
@@ -34,5 +34,6 @@ public class ModItems {
         // Register block items here
         registerEntry(itemEvent, ITEM_RED_PRESENT, RED_PRESENT.getName());
         registerEntry(itemEvent, ITEM_PURPLE_PRESENT, PURPLE_PRESENT.getName());
+        registerEntry(itemEvent, ITEM_BLUE_PRESENT, BLUE_PRESENT.getName());
     }
 }
