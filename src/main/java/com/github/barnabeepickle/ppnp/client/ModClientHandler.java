@@ -52,8 +52,8 @@ public class ModClientHandler {
         registerBlockItem(GREEN_PRESENT);
         registerBlockItem(CYAN_PRESENT);
         registerBlockItem(LIGHT_BLUE_PRESENT);
-        registerBlockItem(PURPLE_PRESENT);
         registerBlockItem(BLUE_PRESENT);
+        registerBlockItem(PURPLE_PRESENT);
     }
 
     // Block Item model registration utility
