@@ -28,6 +28,7 @@ public class ModItems {
     public static ItemBlock ITEM_BLUE_PRESENT = new ModBlockItem(BLUE_PRESENT);
     public static ItemBlock ITEM_PURPLE_PRESENT = new ModBlockItem(PURPLE_PRESENT);
     public static ItemBlock ITEM_MAGENTA_PRESENT = new ModBlockItem(MAGENTA_PRESENT);
+    public static ItemBlock ITEM_PINK_PRESENT = new ModBlockItem(PINK_PRESENT);
 
     @SubscribeEvent
     public static void registerItemsEvent(RegistryEvent.Register<Item> event) {
@@ -49,5 +50,6 @@ public class ModItems {
         registerEntry(itemEvent, ITEM_BLUE_PRESENT, BLUE_PRESENT.getName());
         registerEntry(itemEvent, ITEM_PURPLE_PRESENT, PURPLE_PRESENT.getName());
         registerEntry(itemEvent, ITEM_MAGENTA_PRESENT, MAGENTA_PRESENT.getName());
+        registerEntry(itemEvent, ITEM_PINK_PRESENT, PINK_PRESENT.getName());
     }
 }
