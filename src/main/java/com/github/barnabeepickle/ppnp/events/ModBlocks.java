@@ -15,6 +15,7 @@ public class ModBlocks {
     public static PresentBlock LIGHT_GRAY_PRESENT = new PresentBlockPrefix(EnumDyeColor.SILVER, "light_gray");
     public static PresentBlock GRAY_PRESENT = new PresentBlockPrefix(EnumDyeColor.GRAY);
     public static PresentBlock BLACK_PRESENT = new PresentBlockPrefix(EnumDyeColor.BLACK);
+    public static PresentBlock BROWN_PRESENT = new PresentBlockPrefix(EnumDyeColor.BROWN);
     public static PresentBlock RED_PRESENT = new PresentBlockPrefix(EnumDyeColor.RED);
     public static PresentBlock ORANGE_PRESENT = new PresentBlockPrefix(EnumDyeColor.ORANGE);
     public static PresentBlock YELLOW_PRESENT = new PresentBlockPrefix(EnumDyeColor.YELLOW);
@@ -36,6 +37,7 @@ public class ModBlocks {
         registerEntry(blockEvent, LIGHT_GRAY_PRESENT, LIGHT_GRAY_PRESENT.getName());
         registerEntry(blockEvent, GRAY_PRESENT, GRAY_PRESENT.getName());
         registerEntry(blockEvent, BLACK_PRESENT, BLACK_PRESENT.getName());
+        registerEntry(blockEvent, BROWN_PRESENT, BROWN_PRESENT.getName());
         registerEntry(blockEvent, RED_PRESENT, RED_PRESENT.getName());
         registerEntry(blockEvent, ORANGE_PRESENT, ORANGE_PRESENT.getName());
         registerEntry(blockEvent, YELLOW_PRESENT, YELLOW_PRESENT.getName());

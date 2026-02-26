@@ -22,6 +22,7 @@ public class ModItems {
     public static ItemBlock ITEM_LIGHT_GRAY_PRESENT = new ModBlockItem(LIGHT_GRAY_PRESENT);
     public static ItemBlock ITEM_GRAY_PRESENT = new ModBlockItem(GRAY_PRESENT);
     public static ItemBlock ITEM_BLACK_PRESENT = new ModBlockItem(BLACK_PRESENT);
+    public static ItemBlock ITEM_BROWN_PRESENT = new ModBlockItem(BROWN_PRESENT);
     public static ItemBlock ITEM_RED_PRESENT = new ModBlockItem(RED_PRESENT);
     public static ItemBlock ITEM_ORANGE_PRESENT = new ModBlockItem(ORANGE_PRESENT);
     public static ItemBlock ITEM_YELLOW_PRESENT = new ModBlockItem(YELLOW_PRESENT);
@@ -48,6 +49,7 @@ public class ModItems {
         registerEntry(itemEvent, ITEM_LIGHT_GRAY_PRESENT, LIGHT_GRAY_PRESENT.getName());
         registerEntry(itemEvent, ITEM_GRAY_PRESENT, GRAY_PRESENT.getName());
         registerEntry(itemEvent, ITEM_BLACK_PRESENT, BLACK_PRESENT.getName());
+        registerEntry(itemEvent, ITEM_BROWN_PRESENT, BROWN_PRESENT.getName());
         registerEntry(itemEvent, ITEM_RED_PRESENT, RED_PRESENT.getName());
         registerEntry(itemEvent, ITEM_ORANGE_PRESENT, ORANGE_PRESENT.getName());
         registerEntry(itemEvent, ITEM_YELLOW_PRESENT, YELLOW_PRESENT.getName());
