@@ -1,5 +1,7 @@
 package com.github.barnabeepickle.ppnp.utils;
 
+import net.minecraft.block.material.MapColor;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.math.MathHelper;
 
 @SuppressWarnings("unused")
@@ -29,5 +31,26 @@ public class ColorUtil {
      */
     public static int color(int r, int g, int b) {
         return ALPHA | (r << 16) | (g << 8) | b;
+    }
+
+    public static MapColor dyeColorToMapColor(EnumDyeColor dye) {
+        return switch (dye) {
+            case WHITE -> MapColor.SNOW;
+            case SILVER -> MapColor.SILVER;
+            case GRAY -> MapColor.GRAY;
+            case BLACK -> MapColor.BLACK;
+            case BROWN -> MapColor.BROWN;
+            case RED -> MapColor.RED;
+            case ORANGE -> MapColor.ADOBE;
+            case YELLOW -> MapColor.YELLOW;
+            case LIME -> MapColor.LIME;
+            case GREEN -> MapColor.GREEN;
+            case CYAN -> MapColor.CYAN;
+            case LIGHT_BLUE -> MapColor.LIGHT_BLUE;
+            case BLUE -> MapColor.BLUE;
+            case PURPLE -> MapColor.PURPLE;
+            case MAGENTA -> MapColor.MAGENTA;
+            case PINK -> MapColor.PINK;
+        };
     }
 }
