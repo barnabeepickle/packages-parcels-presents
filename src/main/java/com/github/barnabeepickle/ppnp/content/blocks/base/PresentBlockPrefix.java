@@ -14,9 +14,17 @@ public class PresentBlockPrefix extends PresentBlock {
     }
 
     public PresentBlockPrefix(EnumDyeColor dye, CreativeTabs creativeTab) {
+        this(dye, dye.getDyeColorName(), creativeTab);
+    }
+
+    public PresentBlockPrefix(EnumDyeColor dye, String prefix) {
+        this(dye, prefix, primaryCreativeTab);
+    }
+
+    public PresentBlockPrefix(EnumDyeColor dye, String prefix, CreativeTabs creativeTab) {
         super(ColorUtil.dyeColorToMapColor(dye), creativeTab);
         this.dyeColor = dye;
-        this.name = dye.getDyeColorName() + "_present";
+        this.name = prefix + "_present";
         this.setTranslationKey(this.name);
     }
 
