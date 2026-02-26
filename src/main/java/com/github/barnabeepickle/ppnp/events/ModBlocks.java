@@ -11,6 +11,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import static com.github.barnabeepickle.ppnp.utils.RegisteryUtil.registerEntry;
 
 public class ModBlocks {
+    public static PresentBlock WHITE_PRESENT = new PresentBlockPrefix(EnumDyeColor.WHITE);
     public static PresentBlock RED_PRESENT = new PresentBlockPrefix(EnumDyeColor.RED);
     public static PresentBlock ORANGE_PRESENT = new PresentBlockPrefix(EnumDyeColor.ORANGE);
     public static PresentBlock YELLOW_PRESENT = new PresentBlockPrefix(EnumDyeColor.YELLOW);
@@ -28,6 +29,7 @@ public class ModBlocks {
         IForgeRegistry<Block> blockEvent = event.getRegistry();
 
         // Register blocks here
+        registerEntry(blockEvent, WHITE_PRESENT, WHITE_PRESENT.getName());
         registerEntry(blockEvent, RED_PRESENT, RED_PRESENT.getName());
         registerEntry(blockEvent, ORANGE_PRESENT, ORANGE_PRESENT.getName());
         registerEntry(blockEvent, YELLOW_PRESENT, YELLOW_PRESENT.getName());
