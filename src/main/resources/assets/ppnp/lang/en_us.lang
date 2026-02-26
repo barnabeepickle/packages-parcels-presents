@@ -26,5 +26,6 @@ tile.yellow_present.name=§e§lYellow§r Present
 tile.lime_present.name=§a§lLime§r Present
 tile.green_present.name=§2§lGreen§r Present
 tile.cyan_present.name=§3§lCyan§r Present
+tile.light_blue_present.name=§b§lLight Blue§r Present
 tile.blue_present.name=§9§lBlue§r Present
 tile.purple_present.name=§5§lPurple§r Present
