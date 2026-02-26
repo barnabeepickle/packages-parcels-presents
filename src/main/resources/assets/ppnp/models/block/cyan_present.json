@@ -5,7 +5,7 @@
     "0": "ppnp:blocks/present/cyan/present_ribbon_cross",
     "1": "ppnp:blocks/present/cyan/present_ribbon_single",
     "2": "ppnp:blocks/present/purple_bow",
-    "particle": "ppnp:blocks/present/blue/present_ribbon_cross"
+    "particle": "ppnp:blocks/present/cyan/present_ribbon_cross"
   },
   "elements": [
     {
