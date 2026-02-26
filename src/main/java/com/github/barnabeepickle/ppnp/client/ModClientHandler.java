@@ -1,6 +1,5 @@
 package com.github.barnabeepickle.ppnp.client;
 
-import com.github.barnabeepickle.ppnp.events.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -14,6 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Objects;
 
 import static com.github.barnabeepickle.ppnp.events.ModBlocks.*;
+import static com.github.barnabeepickle.ppnp.events.ModItems.*;
 
 public class ModClientHandler {
     @SideOnly(Side.CLIENT)
@@ -25,9 +25,10 @@ public class ModClientHandler {
 
     public static void registerItemModels() {
         // register item models here
-        registerItem(ModItems.CARDBOARD);
-        registerItem(ModItems.CARDBOARD_BOX);
-        registerItem(ModItems.RED_WRAPPING_PAPER);
+        registerItem(CARDBOARD);
+        registerItem(CARDBOARD_BOX);
+        registerItem(WHITE_WRAPPING_PAPER);
+        registerItem(RED_WRAPPING_PAPER);
     }
 
     // Item model registration utilities

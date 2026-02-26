@@ -15,10 +15,14 @@ import static com.github.barnabeepickle.ppnp.events.ModBlocks.*;
 import static com.github.barnabeepickle.ppnp.utils.RegisteryUtil.registerEntry;
 
 public class ModItems {
+    // Items
     public static CardboardItem CARDBOARD = new CardboardItem();
     public static CardboardBoxItem CARDBOARD_BOX = new CardboardBoxItem();
+    // Wrapping Paper
+    public static WrappingPaperItem WHITE_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.WHITE);
     public static WrappingPaperItem RED_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.RED);
 
+    // Block Items
     public static ItemBlock ITEM_WHITE_PRESENT = new ModBlockItem(WHITE_PRESENT);
     public static ItemBlock ITEM_LIGHT_GRAY_PRESENT = new ModBlockItem(LIGHT_GRAY_PRESENT);
     public static ItemBlock ITEM_GRAY_PRESENT = new ModBlockItem(GRAY_PRESENT);
@@ -43,6 +47,7 @@ public class ModItems {
         // Register items here
         registerEntry(itemEvent, CARDBOARD, CARDBOARD.getName());
         registerEntry(itemEvent, CARDBOARD_BOX, CARDBOARD_BOX.getName());
+        registerEntry(itemEvent, WHITE_WRAPPING_PAPER, WHITE_WRAPPING_PAPER.getName());
         registerEntry(itemEvent, RED_WRAPPING_PAPER, RED_WRAPPING_PAPER.getName());
 
         // Register block items here
