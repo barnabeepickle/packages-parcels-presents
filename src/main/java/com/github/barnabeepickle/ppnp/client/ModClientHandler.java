@@ -48,6 +48,7 @@ public class ModClientHandler {
         registerBlockItem(WHITE_PRESENT);
         registerBlockItem(LIGHT_GRAY_PRESENT);
         registerBlockItem(GRAY_PRESENT);
+        registerBlockItem(BLACK_PRESENT);
         registerBlockItem(RED_PRESENT);
         registerBlockItem(ORANGE_PRESENT);
         registerBlockItem(YELLOW_PRESENT);
