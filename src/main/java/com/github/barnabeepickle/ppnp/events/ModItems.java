@@ -4,6 +4,7 @@ import com.github.barnabeepickle.ppnp.content.items.CardboardBoxItem;
 import com.github.barnabeepickle.ppnp.content.items.CardboardItem;
 import com.github.barnabeepickle.ppnp.content.items.ModBlockItem;
 import com.github.barnabeepickle.ppnp.content.items.base.WrappingPaperItem;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.event.RegistryEvent;
@@ -16,7 +17,7 @@ import static com.github.barnabeepickle.ppnp.utils.RegisteryUtil.registerEntry;
 public class ModItems {
     public static CardboardItem CARDBOARD = new CardboardItem();
     public static CardboardBoxItem CARDBOARD_BOX = new CardboardBoxItem();
-    public static WrappingPaperItem RED_WRAPPING_PAPER = new WrappingPaperItem("red");
+    public static WrappingPaperItem RED_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.RED);
 
     public static ItemBlock ITEM_WHITE_PRESENT = new ModBlockItem(WHITE_PRESENT);
     public static ItemBlock ITEM_LIGHT_GRAY_PRESENT = new ModBlockItem(LIGHT_GRAY_PRESENT);
