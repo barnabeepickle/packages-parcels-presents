@@ -4,7 +4,7 @@
   "textures": {
     "0": "ppnp:blocks/present/yellow/present_ribbon_cross",
     "1": "ppnp:blocks/present/yellow/present_ribbon_single",
-    "2": "ppnp:blocks/present/green_bow",
+    "2": "ppnp:blocks/present/light_green_bow",
     "particle": "ppnp:blocks/present/yellow/present_ribbon_cross"
   },
   "elements": [
