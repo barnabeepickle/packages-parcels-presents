@@ -1,4 +1,4 @@
-package com.github.barnabeepickle.ppnp.utils.aabb;
+package com.github.barnabeepickle.ppnp.utils.bb;
 
 import net.minecraft.util.math.AxisAlignedBB;
 
