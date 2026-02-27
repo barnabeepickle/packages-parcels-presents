@@ -2,6 +2,7 @@ package com.github.barnabeepickle.ppnp.content.blocks.base;
 
 import com.cleanroommc.modularui.factory.GuiFactories;
 import com.github.barnabeepickle.ppnp.content.blocks.entity.PresentTileEntity;
+import com.github.barnabeepickle.ppnp.utils.bb.BoundingBox16;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -13,11 +14,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityShulkerBox;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
@@ -176,6 +178,18 @@ public abstract class PresentBlock extends ModBlock implements ITileEntityProvid
     @Override
     public TileEntity createNewTileEntity(@Nonnull World worldIn, int meta) {
         return new PresentTileEntity();
+    }
+
+    private static final AxisAlignedBB AABB = new BoundingBox16(1, 0, 1, 15, 16, 15);
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public @Nonnull AxisAlignedBB getBoundingBox(
+            @Nonnull IBlockState state,
+            @Nonnull IBlockAccess source,
+            @Nonnull BlockPos pos
+    ) {
+        return AABB;
     }
 
     @SuppressWarnings("deprecation")
