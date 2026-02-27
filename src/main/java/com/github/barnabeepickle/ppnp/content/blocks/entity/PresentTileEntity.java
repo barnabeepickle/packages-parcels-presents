@@ -22,6 +22,7 @@ import com.github.barnabeepickle.ppnp.Tags;
 import com.github.barnabeepickle.ppnp.content.blocks.base.PresentBlock;
 import com.github.barnabeepickle.ppnp.networking.NetworkHandler;
 import com.github.barnabeepickle.ppnp.networking.messages.PresentOpenMessage;
+import com.github.barnabeepickle.ppnp.ppnpMod;
 import com.github.barnabeepickle.ppnp.ui.AssetsUI;
 import com.github.barnabeepickle.ppnp.utils.ChristmasUtil;
 import com.github.barnabeepickle.ppnp.utils.ColorUtil;
@@ -236,7 +237,7 @@ public class PresentTileEntity extends TileEntity implements IGuiHolder<PosGuiDa
         if (world.isBlockLoaded(blockPos)) {
             this.beingOpened = true;
             for (int i = 0; i < SLOT_COUNT; i++) {
-                target.addItemStackToInventory(this.itemHandler.getStackInSlot(i));
+                Block.spawnAsEntity(world, blockPos, this.itemHandler.getStackInSlot(i));
                 this.itemHandler.extractItem(i, this.itemHandler.getStackInSlot(i).getCount(), false);
             }
             IBlockState blockstate = world.getBlockState(blockPos);
