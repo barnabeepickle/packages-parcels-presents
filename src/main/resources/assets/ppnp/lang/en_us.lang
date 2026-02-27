@@ -20,6 +20,7 @@ item.cardboard.name=Cardboard
 item.cardboard_box.name=Cardboard Box
 
 item.white_wrapping_paper.name=§f§lWhite§r Wrapping Paper
+item.light_gray_wrapping_paper.name=§7§lLight Gray§r Wrapping Paper
 item.red_wrapping_paper.name=§c§lRed§r Wrapping Paper
 
 tile.white_present.name=§f§lWhite§r Present
