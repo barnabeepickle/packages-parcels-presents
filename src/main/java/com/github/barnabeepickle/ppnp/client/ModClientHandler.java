@@ -30,7 +30,19 @@ public class ModClientHandler {
         registerItem(WHITE_WRAPPING_PAPER);
         registerItem(LIGHT_GRAY_WRAPPING_PAPER);
         registerItem(GRAY_WRAPPING_PAPER);
+        registerItem(BLACK_WRAPPING_PAPER);
+        registerItem(BROWN_WRAPPING_PAPER);
         registerItem(RED_WRAPPING_PAPER);
+        registerItem(ORANGE_WRAPPING_PAPER);
+        registerItem(YELLOW_WRAPPING_PAPER);
+        registerItem(LIME_WRAPPING_PAPER);
+        registerItem(GREEN_WRAPPING_PAPER);
+        registerItem(CYAN_WRAPPING_PAPER);
+        registerItem(LIGHT_BLUE_WRAPPING_PAPER);
+        registerItem(BLUE_WRAPPING_PAPER);
+        registerItem(PURPLE_WRAPPING_PAPER);
+        registerItem(MAGENTA_WRAPPING_PAPER);
+        registerItem(PINK_WRAPPING_PAPER);
     }
 
     // Item model registration utilities

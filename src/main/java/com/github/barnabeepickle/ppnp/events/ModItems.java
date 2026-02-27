@@ -22,7 +22,19 @@ public class ModItems {
     public static WrappingPaperItem WHITE_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.WHITE);
     public static WrappingPaperItem LIGHT_GRAY_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.SILVER, "light_gray");
     public static WrappingPaperItem GRAY_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.GRAY);
+    public static WrappingPaperItem BLACK_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.BLACK);
+    public static WrappingPaperItem BROWN_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.BROWN);
     public static WrappingPaperItem RED_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.RED);
+    public static WrappingPaperItem ORANGE_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.ORANGE);
+    public static WrappingPaperItem YELLOW_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.YELLOW);
+    public static WrappingPaperItem LIME_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.LIME);
+    public static WrappingPaperItem GREEN_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.GREEN);
+    public static WrappingPaperItem CYAN_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.CYAN);
+    public static WrappingPaperItem LIGHT_BLUE_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.LIGHT_BLUE);
+    public static WrappingPaperItem BLUE_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.BLUE);
+    public static WrappingPaperItem PURPLE_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.PURPLE);
+    public static WrappingPaperItem MAGENTA_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.MAGENTA);
+    public static WrappingPaperItem PINK_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.PINK);
 
     // Block Items
     public static ItemBlock ITEM_WHITE_PRESENT = new ModBlockItem(WHITE_PRESENT);
@@ -52,7 +64,19 @@ public class ModItems {
         registerEntry(itemEvent, WHITE_WRAPPING_PAPER, WHITE_WRAPPING_PAPER.getName());
         registerEntry(itemEvent, LIGHT_GRAY_WRAPPING_PAPER, LIGHT_GRAY_WRAPPING_PAPER.getName());
         registerEntry(itemEvent, GRAY_WRAPPING_PAPER, GRAY_WRAPPING_PAPER.getName());
+        registerEntry(itemEvent, BLACK_WRAPPING_PAPER, BLACK_WRAPPING_PAPER.getName());
+        registerEntry(itemEvent, BROWN_WRAPPING_PAPER, BROWN_WRAPPING_PAPER.getName());
         registerEntry(itemEvent, RED_WRAPPING_PAPER, RED_WRAPPING_PAPER.getName());
+        registerEntry(itemEvent, ORANGE_WRAPPING_PAPER, ORANGE_WRAPPING_PAPER.getName());
+        registerEntry(itemEvent, YELLOW_WRAPPING_PAPER, YELLOW_WRAPPING_PAPER.getName());
+        registerEntry(itemEvent, LIME_WRAPPING_PAPER, LIME_WRAPPING_PAPER.getName());
+        registerEntry(itemEvent, GREEN_WRAPPING_PAPER, GREEN_WRAPPING_PAPER.getName());
+        registerEntry(itemEvent, CYAN_WRAPPING_PAPER, CYAN_WRAPPING_PAPER.getName());
+        registerEntry(itemEvent, LIGHT_BLUE_WRAPPING_PAPER, LIGHT_BLUE_WRAPPING_PAPER.getName());
+        registerEntry(itemEvent, BLUE_WRAPPING_PAPER, BLUE_WRAPPING_PAPER.getName());
+        registerEntry(itemEvent, PURPLE_WRAPPING_PAPER, PURPLE_WRAPPING_PAPER.getName());
+        registerEntry(itemEvent, MAGENTA_WRAPPING_PAPER, MAGENTA_WRAPPING_PAPER.getName());
+        registerEntry(itemEvent, PINK_WRAPPING_PAPER, PINK_WRAPPING_PAPER.getName());
 
         // Register block items here
         registerEntry(itemEvent, ITEM_WHITE_PRESENT, WHITE_PRESENT.getName());
