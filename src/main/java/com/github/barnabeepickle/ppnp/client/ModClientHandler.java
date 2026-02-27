@@ -29,6 +29,7 @@ public class ModClientHandler {
         registerItem(CARDBOARD_BOX);
         registerItem(WHITE_WRAPPING_PAPER);
         registerItem(LIGHT_GRAY_WRAPPING_PAPER);
+        registerItem(GRAY_WRAPPING_PAPER);
         registerItem(RED_WRAPPING_PAPER);
     }
 

@@ -21,6 +21,7 @@ public class ModItems {
     // Wrapping Paper
     public static WrappingPaperItem WHITE_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.WHITE);
     public static WrappingPaperItem LIGHT_GRAY_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.SILVER, "light_gray");
+    public static WrappingPaperItem GRAY_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.GRAY);
     public static WrappingPaperItem RED_WRAPPING_PAPER = new WrappingPaperItem(EnumDyeColor.RED);
 
     // Block Items
@@ -50,6 +51,7 @@ public class ModItems {
         registerEntry(itemEvent, CARDBOARD_BOX, CARDBOARD_BOX.getName());
         registerEntry(itemEvent, WHITE_WRAPPING_PAPER, WHITE_WRAPPING_PAPER.getName());
         registerEntry(itemEvent, LIGHT_GRAY_WRAPPING_PAPER, LIGHT_GRAY_WRAPPING_PAPER.getName());
+        registerEntry(itemEvent, GRAY_WRAPPING_PAPER, GRAY_WRAPPING_PAPER.getName());
         registerEntry(itemEvent, RED_WRAPPING_PAPER, RED_WRAPPING_PAPER.getName());
 
         // Register block items here
